@@ -1,0 +1,20 @@
+<template name="PureWin">
+<head> 
+    {{> head}}     
+</head>
+<body class="compact-menu">
+    <div class="cd-overlay"></div>
+        {{> nav_search}}
+    <main class="page-content content-wrap">
+        {{> nav}}
+        <div class="page-inner">
+            {{> breadcrumbs}}           
+            <div id="main-wrapper">
+                {{> yield}}<!-- page content -->
+            </div>
+            {{> footer}}
+        </div>
+    </main>
+    <div class="cd-overlay"></div>
+</body>
+</template>

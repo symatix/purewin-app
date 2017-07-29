@@ -1,0 +1,11 @@
+
+.card-container{
+  margin-top:1em;
+}
+.panel-default > .panel-heading{
+	background-color:#F3F3F3;
+	border-color: #F3F3F3;
+}
+input.set-name-input{
+	width:50%;
+}

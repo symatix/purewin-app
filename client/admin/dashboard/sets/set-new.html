@@ -1,0 +1,46 @@
+<template name="admin_dash_set_new">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">New set</h4>
+        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+        <div class="heading-elements">
+          <ul class="list-inline mb-0">
+            <li><a class="btn-card-toggle inactive-card" data-toggle="collapse" data-target="#dashboard-set-list"><i class="card-status fa fa-angle-down"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body collapse" id="dashboard-set-list">
+        <div class="container">
+            <div class="card-container">
+
+            <div class="row">
+              <form class="form-inline">
+                <div class="form-group">
+                  <label for="exampleInputName2">Name</label>
+                  <input type="text" class="form-control" id="set-new-name" placeholder="">
+                </div>
+
+                <div class="set-actions float-right" role="group" aria-label="...">
+                  <span class="glyphicon js-glyphicon glyphicon-log-in js-btn-term-select"></span>
+                  <span class="glyphicon js-glyphicon glyphicon-floppy-saved js-btn-term-save"></span>
+                  <span class="glyphicon js-glyphicon glyphicon-floppy-remove js-btn-term-cancel"></span>
+                </div>
+
+                
+              </form>
+            </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-body set-term-tags">
+              </div>
+            </div>
+          </div>
+				</div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+</template>

@@ -1,0 +1,3 @@
+Template.nav.rendered = function(){
+	$("body").append('<script src="assets/plugins/pace-master/pace.min.js"></script><script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script><script src="assets/plugins/switchery/switchery.min.js"></script><script src="assets/plugins/uniform/js/jquery.uniform.standalone.js"></script><script src="assets/plugins/waves/waves.min.js"></script><script src="assets/js/meteor.js"></script>')
+}

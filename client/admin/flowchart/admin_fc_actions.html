@@ -1,0 +1,82 @@
+<template name="flowchart_actions">
+
+<!-- right menu -->
+      <div class="card">
+
+
+        <div class="card-header">
+          <h5 class="card-title" id="cell-name">Select Element</h5>
+          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a class="btn-card-toggle active-card flowchart-elements" data-toggle="collapse" data-target="#flowchart-actions"><i class="card-status fa fa-angle-down"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body collapse in" id="flowchart-actions">
+              <div class="form-group justify-center">
+                <div class="panel-section">Actions</div>
+                <div class="btn-group-vertical" role="group">
+            <button class="btn btn-secondary btn-signal">Send signal</button>
+            <button class="btn btn-secondary btn-rotate">Rotate</button>
+            <button class="btn btn-secondary btn-clearlink">Clear links</button>
+            <button class="btn btn-secondary btn-delete">Delete element</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="panel-section">Set color to element</div>
+          <table>
+            <tr class="panel-table">
+              <td>
+                <span>Body</span>
+                <br/>
+                <input id="cell-color" type="color" name="favcolor" value="#ffffff">
+              </td>
+              <td>
+              &emsp;
+              </td>
+              <td>
+                <span>Text</span>
+                <br/>
+                <input id="cell-text-color" type="color" name="favcolor" value="#000000">
+              </td>
+            </tr>
+          </table>
+          </div>
+          <!--
+          <div class="form-group">
+          <div class="panel-section">Element size</div>
+          <input name="cell-size" id="cell-size" class="form-control" type="range" value="100" min="50" max="300" autocomplete="off"/>
+          <output name="cell-size" for="cell-size">100</output>
+              </div>
+              -->
+          <div class="form-group">
+            <div class="panel-section">Font size</div>
+            <input name="cell-font-size" id="cell-font-size" class="form-control" type="range" value="14" min="5" max="40" autocomplete="off"/>
+            <output name="cell-font-size" for="height">14</output>
+          </div>
+            <div class="form-group">
+              <div class="panel-section align-center">Set element value</div>
+              <span>Term</span><br/>
+              <select class="custom-select" id="cell-term" autocomplete="off">
+                <option name="cell-term-selection" value="none" selected disabled>Select term</option>
+                {{#each term}}
+                	<option name="cell-term-selection" value="{{name}}" data-id="{{_id}}" data-collection="terms">{{name}}</option>
+                {{/each}}
+              </select>
+              <br/>
+              <span>Set</span><br/>
+              <select class="custom-select" id="cell-term-set" autocomplete="off">
+                <option name="cell-set-selection" value="none" selected disabled>Select set</option>
+                {{#each set}}
+                	<option name="cell-term-selection" value="{{name}}" data-id="{{_id}}" data-collection="sets">{{name}}</option>
+                {{/each}}
+              </select>
+              <br/>
+              <span>Custom text</span>
+              <input type="text" name="cell-custom-text" id="cell-text-custom">
+            </div>
+          </div>
+        </div>
+
+</template>

@@ -1,0 +1,36 @@
+<template name="admin_term_view">
+
+  	<tr class="table-entry" id="table-term-{{_id}}">
+    	<th scope="row">{{name}}</th>
+    	<td>{{type}}</td>
+    <td>
+    {{#if newSet}}
+      <div class="pure-checkbox float-right">
+          <input class="new-set-term"  id="set-term-new-{{_id}}" name="checkbox" type="checkbox">
+          <label for="set-term-new-{{_id}}"></label>
+      </div>
+    {{else}}
+        <i class="term-edit float-right fa fa-cog" aria-hidden="true"></i>
+
+    	{{#if multiVal}}
+			<br/><i class="term-expand float-right {{#if expandVal}}term-sub-active{{else}}term-sub-inactive{{/if}} fa fa-angle-down" data-toggle="collapse" data-target="#term-view-collapse-{{_id}}"></i>
+    	{{/if}}
+    {{/if}}
+        </td>
+  	</tr>
+
+  	{{#if multiVal}}
+  		{{#if expandVal}}
+		  	<tr class="term-colapsed" id="term-collapse-{{_id}}">
+		  		<td colspan="3">
+		      		<div class="term-multi-values" id="term-collapse-{{_id}}">
+				      	{{#each multiVal}}
+				      		&emsp;&emsp;Value {{$add @index 1}}: {{this}}<br/>
+				      	{{/each}}
+		      		</div>
+		  		</td>
+		  	</tr>
+  		{{/if}}
+	{{/if}}
+
+</template>

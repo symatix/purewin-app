@@ -1,0 +1,96 @@
+<template name="flowchart_top">
+
+
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Logic</h4>
+    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+    <div class="heading-elements">
+      <ul class="list-inline mb-0">
+        <li><a class="btn-card-toggle active-card flowchart-logic" data-toggle="collapse" data-target="#flowchart-logic"><i class="card-status fa fa-angle-down"></i></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-body collapse in" id="flowchart-logic">
+    <div class="container">
+      <div class="row">
+
+
+        {{#each graphThumbs}}
+          <div class="col-xs-4 col-md-3 align-center campaign-logic">
+            <h5>{{name}}</h5>
+            <img src="{{link}}" alt="{{name}}">
+            <!--
+            <div class="" id="graph-tumb-{{_id}}">
+              {{graphHtml}}
+            </div>
+            -->
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Elements</h4>
+    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+    <div class="heading-elements">
+      <ul class="list-inline mb-0">
+        <li><a class="btn-card-toggle active-card flowchart-elements" data-toggle="collapse" data-target="#flowchart-elements"><i class="card-status fa fa-angle-down"></i></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-body collapse in" id="flowchart-elements">
+    <div class="container">
+      <div class="stencil-holder">
+        <div id="stencil" class="paper" style=""></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- left menu -->
+  <!--
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Logic elements</h5>
+          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="collapse"><i class="card-status fa fa-angle-down"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body collapse in collapse in">
+
+          <div class="stencil-holder">
+            <div id="stencil" class="paper" style=""></div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Workflow charts</h5>
+          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-body collapse in collapse">
+          <ul class="list-group" id="workflow-panel">
+          </ul>
+        </div>
+
+      </div>
+   -->
+</template>

@@ -1,0 +1,92 @@
+<template name="admin_dash_set">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Sets available</h4>
+        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+        <div class="heading-elements">
+          <ul class="list-inline mb-0">
+            <li><a class="btn-card-toggle active-card" data-toggle="collapse" data-target="#dashboard-set-list-view"><i class="card-status fa fa-angle-down"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body collapse in" id="dashboard-set-list-view">
+        <div class="container">
+            <div class="card-container">
+
+        <div class="row">
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 set-card-all">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          {{#each sets}}
+            <div class="panel panel-default">
+              <div class="panel-heading panel-content" role="tab">
+                    <h5 set-id="{{_id}}">{{name}}</h5>
+                    <span input-holder="{{_id}}"></span>
+
+                  <div class="set-panel-actions">
+                    <i class="fa btn-set-panel set-panel-terms fa-list-alt font-large-1" id="set-panel-terms-{{_id}}" role="button" data-toggle="collapse" data-parent="#accordion" href="#set-panel-{{_id}}" aria-hidden="true"></i>&emsp;
+                    <i class="fa btn-set-panel set-panel-edit fa-pencil-square-o font-large-1" aria-hidden="true"></i>&emsp;
+                    <i class="fa btn-set-panel set-panel-delete fa-trash-o font-large-1" aria-hidden="true"></i>
+                  </div>
+              </div>
+              <div id="set-panel-{{_id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  {{#each termset}}
+                  <div class="col-xl-6 col-lg-6 col-xs-12">
+                      <div class="card">
+                          <div class="card-body card-small-body" id="card-small-body-{{_id}}">
+                              <div class="card-block">
+                                  <div class="media card-small">
+                                      <div class="media-body text-xs-left">
+                                        <table>
+                                          <tr>
+                                            <td>
+                                              <h5 class="">{{name}}</h5>
+                                              <span class="">{{type}}</span>
+                                            </td>
+                                            <td>
+                                            {{#if values}}
+                                            <div class="card-values">
+                                              <i class="card-button fa fa-th-list js-set-term-value-collapse" data-toggle="collapse" data-target="#set-term-values-{{$add 1 counter}}" aria-hidden="true"></i>
+                                              <div class="card-values-list collapse" id="set-term-values-{{counter}}">
+                                              <ul>
+                                                {{#each values}}
+                                                <li>{{this}}</li>
+                                                {{/each}}
+                                              </ul>
+                                              </div>
+                                            </div>
+                                            {{/if}}
+                                            </td>
+                                            </tr>
+                                            </table>
+                                      </div>
+                                      <div class="media-right media-middle">
+                                      {{#if editCard}}
+                                          <i class="term-edit js-card-term-edit fa fa-cog font-large-1 float-xs-right" id="edit-set-term-{{id}}"></i>
+                                        {{else}}
+                                          <i class="term-edit js-card-term-delete fa fa-trash-o font-large-1" aria-hidden="true"></i>
+                                      {{/if}}
+                                          
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+          </div>
+				</div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+</template>
