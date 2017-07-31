@@ -23,7 +23,7 @@
 				      </tr>
 				    </thead>
 				    <tbody>
-					{{#each terms}}
+					{{#EasySearch.Each index=termsIndex }}
 				    	{{#transition in="fadeInLeft"}}
 
 						{{#if editOn}}
@@ -37,7 +37,7 @@
 				      	{{/if}}
 
 						{{/transition}}
-					{{/each}}
+					{{/EasySearch.Each}}
 				    </tbody>
 				</table>
 			</div>

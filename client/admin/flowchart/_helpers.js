@@ -8,6 +8,7 @@ Template.flowchart_actions.helpers({
 })
 
 Template.flowchart_top.helpers({
+  	flowchartIndex: () => FlowchartIndex,
 	graphThumbs: function(){
 		return Graphs.find();
 	},

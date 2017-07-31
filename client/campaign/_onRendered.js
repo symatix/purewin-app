@@ -1,20 +1,6 @@
 Template.campaign.rendered = function(){
 
 
-    $('#form-campaign-dateStart').datepicker({
-    	autoclose: true,
-    	container: 'html',
-    }).on('changeDate', function(selected){
-        var startDate = new Date(selected.date.valueOf());
-        startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
-        $('#form-campaign-dateEnd').datepicker('setStartDate', startDate);
-    })
-    $('#form-campaign-dateEnd').datepicker({
-    	autoclose: true,
-    	container: 'html',
-    });
-
-
     /*
 guiCtrlUser = (function(){
 	var DOM = {

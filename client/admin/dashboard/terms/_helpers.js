@@ -1,4 +1,5 @@
 Template.admin_term_card.helpers({
+  	termsIndex: () => TermsIndex,
 	terms:function(){
 		return Terms.find({},{sort:{"name": 1}});
 	},

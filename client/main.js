@@ -3,6 +3,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
+// for variables depending on route position
+Session.set("route", false);
 
 // for switching the view and edit template
 Session.set("editId", false);

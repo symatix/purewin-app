@@ -1,7 +1,13 @@
 <template name="nav_search">
     <form class="search-form" action="#" method="GET">
         <div class="input-group">
-            <input type="text" name="search" class="form-control search-input" placeholder="Type something...">
+        {{#if termSearch}}
+        	{{> EasySearch.Input attributes=searchClass index=termsIndex}}
+        {{/if}}
+        {{#if flowchartSearch}}
+        	{{> EasySearch.Input attributes=searchClass index=flowchartIndex}}
+        {{/if}}
+            <!-- <input type="text" name="search" class="form-control search-input" placeholder="Type something..."> -->
             <span class="input-group-btn">
                 <button class="btn btn-default close-search" type="button"><i class="icon-close"></i></button>
             </span>
