@@ -50,4 +50,11 @@ Meteor.methods({
 			}
 		});
 	},
+	insertCampaign:function(data){
+		Campaigns.insert(data, function(err, result){
+			if(!err){
+				return result;
+			}
+		});
+	}
 });

@@ -5,3 +5,12 @@
 #campaign-name{
 	text-align:center;
 }
+select.form-control{
+	height:34px !important;
+}
+.number-function{
+	border-top:none !important;
+	border-left:none !important;
+	border-right:none !important;
+	border-bottom:1px solid lightgrey !important;
+}

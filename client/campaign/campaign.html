@@ -126,90 +126,99 @@
               <div class="campaign-parameters">
 
                 {{#if textarea}}
+                {{#each textarea}}
                   <div class="row">
-                    <div class="form-group" id="form-container-{{textarea._id}}">
-                      <label for="form-campaign-{{textarea._id}}" class="col-sm-2 control-label">{{textarea.name}}</label>
+                    <div class="form-group" id="form-container-{{_id}}">
+                      <label for="form-campaign-{{_id}}" class="col-sm-2 control-label">{{name}}</label>
                         <div class="col-sm-7">
-                          <input type="text" name="campaign-input" data-name="{{textarea.name}}" data-id="{{textarea._id}}" class="form-control campaign-input" id="form-campaign-{{textarea._id}}">
+                          <input type="text" name="campaign-input" data-name="{{name}}" data-id="{{_id}}" class="form-control campaign-input" id="form-campaign-{{_id}}">
                         </div>
                     </div>
                   </div>
+                {{/each}}
                 {{/if}}
 
                 {{#if number}}
+                {{#each number}}
                   <div class="row">
-                    <div class="form-group" id="form-container-{{number._id}}">
-                      <label for="form-campaign-{{number._id}}" class="col-sm-2 control-label">{{number.name}}</label>
+                    <div class="form-group" id="form-container-{{_id}}">
+                      <label for="form-campaign-{{_id}}" class="col-sm-2 control-label">{{name}}</label>
                       <div class="col-sm-2">
-                        <input type="number" name="campaign-number" data-name="{{number.name}}" data-id="{{number._id}}" class="form-control campaign-number" id="form-campaign-{{_id}}">
+                        <input type="number" name="campaign-number" data-name="{{name}}" data-id="{{_id}}" class="form-control campaign-number" id="form-campaign-{{_id}}">
                       </div>
-                      <div class="col-sm-3">
-                        <select class="form-control" name="campaign-number" id="number-function">
+                      <div class="col-sm-2">
+                        <select class="form-control number-function" data-id="{{_id}}" name="campaign-number">
                           <option value="equal">Equal</option>
                           <option value="greater">Or greater</option>
                           <option value="less">Or less</option>
-                          <option value="range">To</option>
+                          <option value="range">Range</option>
                         </select>
                       </div>
-                      <div class="col-sm-2 if-range"></div>
+                      <div class="col-sm-2 if-range hidden">
+                        <input type="number" name="campaign-number" data-name="{{name}}" data-id="range-{{_id}}" class="form-control campaign-number" id="form-campaign-{{_id}}">
+                      </div>
+                      <div class="col-sm-2"></div>
                     </div>
                   </div>
+                {{/each}}
                 {{/if}}
 
                 {{#if dropbox}}
+                {{#each dropbox}}
                   <div class="row">
-                    <div class="form-group" id="form-container-{{dropbox._id}}">
-                      <label for="form-campaign-{{dropbox.name}}" class="col-sm-2 control-label">{{dropbox.name}}</label>
+                    <div class="form-group" id="form-container-{{_id}}">
+                      <label for="form-campaign-{{name}}" class="col-sm-2 control-label">{{name}}</label>
                       <div class="col-sm-7">
-                        <select class="form-control campaign-dropbox" name="campaign-dropbox" data-name="{{dropbox.name}}" data-id="{{dropbox._id}}" id="form-campaign-{{dropbox._id}}">
+                        <select class="form-control campaign-dropbox" name="campaign-dropbox" data-name="{{name}}" data-id="{{_id}}" id="form-campaign-{{_id}}">
                         <option value="none" selected disabled>Select value</option>
-                          {{#each dropbox.values}}
+                          {{#each values}}
                             <option value="{{this}}">{{this}}</option>
                           {{/each}}
                         </select>
                       </div>
                     </div>
                   </div>
+                {{/each}}
                 {{/if}}
 
                 {{#if single}}
+                {{#each single}}
                   <div class="row">
-                    <div class="form-group" id="form-container-{{single._id}}">
-                      <label for="form-campaign-{{single._id}}" class="col-sm-2 control-label">{{single.name}}</label>
+                    <div class="form-group" id="form-container-{{_id}}">
+                      <label for="form-campaign-{{_id}}" class="col-sm-2 control-label">{{name}}</label>
                       <div class="col-sm-7">
                         <ul class="input-list">
                           <li>
                             <div class="pure-radiobutton">
-                              <input type="radio" class="campaign-single" id="form-campaign-{{single._id}}-true" name="campaign-single" data-name="{{single.name}}" data-id="{{single._id}}" value="true">
-                              <label for="form-campaign-{{single._id}}-true"> True</label>
+                              <input type="radio" class="campaign-single" id="form-campaign-{{_id}}-true" name="campaign-single-{{_id}}" data-name="{{name}}" data-id="{{_id}}" value="true">
+                              <label for="form-campaign-{{_id}}-true"> True</label>
                             </div>
                           </li>
                           <li>
                             <div class="pure-radiobutton">
-                              <input type="radio" class="campaign-single" id="form-campaign-{{single._id}}-false" name="campaign-single" data-id="{{single._id}}" data-name="{{single.name}}" value="false">
-                              <label for="form-campaign-{{single._id}}-false"> False</label>
+                              <input type="radio" class="campaign-single" id="form-campaign-{{_id}}-false" name="campaign-single-{{_id}}" data-id="{{_id}}" data-name="{{name}}" value="false">
+                              <label for="form-campaign-{{_id}}-false"> False</label>
                             </div>
                           </li>
                         </ul>
                       </div>
                     </div>
                   </div>
-
+                {{/each}}
                 {{/if}}
 
-                {{#if checkboxValue}}
-                {{#each checkboxValue}}
+                {{#if checkbox}}
+                {{#each checkbox}}
                   <div class="row">
                     <div class="form-group" id="form-container-{{_id}}">
                       <label for="form-campaign-{{_id}}" class="col-sm-2 control-label">{{name}}</label>
                       <div class="col-sm-7">
                         <ul class="input-list">
                           {{#each values}}
-                {{test}}
                           <li>
                             <div class="pure-checkbox">
-                              <input type="checkbox" class="campaign-checkbox" name="campaign-checkbox" data-name="{{name}}" data-id="{{_id}}" id="checkbox-{{_id}}-{{$add @index length}}" value="{{this}}">
-                              <label for="checkbox-{{_id}}-{{$add @index length}}">{{this}}</label>
+                              <input type="checkbox" class="campaign-checkbox" name="campaign-checkbox" data-name="{{../name}}" data-id="{{../_id}}" id="checkbox-{{../_id}}-{{@index}}" value="{{this}}">
+                              <label for="checkbox-{{../_id}}-{{@index}}">{{this}}</label>
                             </div>
                           </li>
                           {{/each}}
@@ -221,54 +230,36 @@
                 {{/if}}
 
                 {{#if description}}
+                {{#each description}}
                   <div class="row">
-                    <div class="form-group" id="form-container-{{description._id}}">
-                      <label for="form-campaign-{{description._id}}" class="col-sm-2 control-label">{{description.name}}</label>
+                    <div class="form-group" id="form-container-{{_id}}">
+                      <label for="form-campaign-{{_id}}" class="col-sm-2 control-label">{{name}}</label>
                       <div class="col-sm-7">
-                        <textarea rows="3" name="campaign-textarea" data-name="{{description.name}}" data-id="{{description._id}}" class="form-control campaign-textarea" id="form-campaign-{{description._id}}" placeholder=""></textarea>
+                        <textarea rows="3" name="campaign-textarea" data-name="{{name}}" data-id="{{_id}}" class="form-control campaign-textarea" id="form-campaign-{{_id}}" placeholder=""></textarea>
                       </div>
                     </div>
                   </div>
+                {{/each}}
                 {{/if}}
 
                 {{#if multiselect}}
-                  <script>
-                    $('.campaign-multiselect').multiselect({
-                        buttonClass: 'btn btn-secondary btn-multiselect',
-                        numberDisplayed: 6,
-                        includeSelectAllOption: true,
-                        selectAllText: ' Select all',
-                        selectAllValue: 'select-all-value',
-                        maxHeight: 400,
-                        enableFiltering: false, // change this to enable search - future feature
-                        enableCaseInsensitiveFiltering: false,
-                        filterPlaceholder: 'Search',
-                        includeFilterClearBtn: false,
-                        enableHTML: true,
-                        filterBehavior: 'both',
-                        templates: {
-                          button: '<button type="button" class="multiselect dropdown-toggle btn-block" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
-                          ul: '<ul class="multiselect-container dropdown-menu"></ul>',
-                          filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="icon-android-search"></i></span><input class="form-control multiselect-search" style="margin-left:0px" type="text"></div></li>',
-                          filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default multiselect-clear-filter" type="button"><i class="icon-android-cancel"></i></button></span>',
-                          li: '<li><a tabindex="0"><label></label></a></li>',
-                          divider: '<li class="multiselect-item divider"></li>',
-                          liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
-                        }
-                      });
-                  </script>
+                {{#each multiselect}}
                   <div class="row">
-                    <div class="form-group" id="form-container-{{multiselect._id}}">
-                      <label for="form-campaign-{{multiselect._id}}" class="col-sm-2 control-label">{{multiselect.name}}</label>
+                    <div class="form-group" id="form-container-{{_id}}">
+                      <label for="form-campaign-{{_id}}" class="col-sm-2 control-label">{{name}}</label>
                       <div class="col-sm-7">
-                        <select class="form-control campaign-multiselect" name="campaign-multiselect" data-name="{{multiselect.name}}" data-id="{{multiselect._id}}" multiple="multiple" id="form-campaign-{{multiselect._id}}">
-                          {{#each multiselect.values}}
+
+                        <select class="form-control campaign-multiselect" name="campaign-multiselect" data-name="{{name}}" data-id="{{_id}}" multiple="multiple" id="form-campaign-{{_id}}">
+                          {{#each values}}
                           <option value="{{this}}">{{this}}</option>
                           {{/each}}
                       </select>
+
+
                       </div>
                     </div>
                   </div>
+                {{/each}}
                 {{/if}}
 
               </div>
@@ -317,10 +308,41 @@
 
 
     tinymce.init({
-      selector: 'textarea',
+      selector: '#campaign-description',
       skin_url: '/packages/teamon_tinymce/skins/lightgray',
     });
 
     </script>
+    {{#if multiselectScript}}
+    <script>
+    $('[name="campaign-multiselect"]').each(function(){
+      console.log($(this));
+
+      $(this).multiselect({
+          buttonClass: 'btn btn-secondary btn-multiselect btn-block',
+          numberDisplayed: 6,
+          includeSelectAllOption: true,
+          selectAllText: ' Select all',
+          selectAllValue: 'select-all-value',
+          maxHeight: 400,
+          enableFiltering: false, // change this to enable search - future feature
+          enableCaseInsensitiveFiltering: false,
+          filterPlaceholder: 'Search',
+          includeFilterClearBtn: false,
+          enableHTML: true,
+          filterBehavior: 'both',
+          templates: {
+            button: '<button type="button" class="multiselect dropdown-toggle btn-block" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+            ul: '<ul class="multiselect-container dropdown-menu"></ul>',
+            filter: '<li class="multiselect-item filter"><div class="input-group"><span class="input-group-addon"><i class="icon-android-search"></i></span><input class="form-control multiselect-search" style="margin-left:0px" type="text"></div></li>',
+            filterClearBtn: '<span class="input-group-btn"><button class="btn btn-default multiselect-clear-filter" type="button"><i class="icon-android-cancel"></i></button></span>',
+            li: '<li><a tabindex="0"><label></label></a></li>',
+            divider: '<li class="multiselect-item divider"></li>',
+            liGroup: '<li class="multiselect-item multiselect-group"><label></label></li>'
+          }
+        });
+    })
+    </script>
+    {{/if}}
 </template>
 

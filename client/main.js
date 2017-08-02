@@ -24,6 +24,9 @@ Session.set("editSet", false)
 //when campaign logic selected
 Session.set("campaignLogic", false);
 
+// set to reset when loading campaign terms and used for init() multiselect on load
+Session.set("multiselect", false);
+
 
 Template.registerHelper('$eq', function (a, b) {
       return a === b;

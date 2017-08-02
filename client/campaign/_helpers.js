@@ -28,25 +28,16 @@ Template.campaign.helpers({
 	},
 	textarea:function(){
 		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
+		var idArr = [];
 		for (var i = 0; i < termIds.length; i++){
 			var type = Terms.findOne(termIds[i]).type;
 			if (type === "textarea"){
-				return Terms.findOne(termIds[i]);
+				idArr.push(termIds[i]);
 			}
 		}
+		return Terms.find({_id:{$in:idArr}});
 	},
 	checkbox:function(){
-		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
-		for (var i = 0; i < termIds.length; i++){
-			var type = Terms.findOne(termIds[i]).type;
-			if (type === "checkbox"){
-				return Terms.findOne(termIds[i]);
-			}
-		}
-		//console.log(arr);
-		//return Terms.find({_id:{$in:arr}});
-	},
-	checkboxValue:function(){
 		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
 		var idArr = [];
 		for (var i = 0; i < termIds.length; i++){
@@ -55,57 +46,67 @@ Template.campaign.helpers({
 				idArr.push(termIds[i]);
 			}
 		}
-		var values = Terms.find({_id:{$in:idArr}});
-		console.log(values);
-		return values;
-	},
-	test:function(){
-		console.log(this);
-		return this._id;
+		return Terms.find({_id:{$in:idArr}});	
 	},
 	dropbox:function(){
 		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
+		var idArr = [];
 		for (var i = 0; i < termIds.length; i++){
 			var type = Terms.findOne(termIds[i]).type;
 			if (type === "dropbox"){
-				return Terms.findOne(termIds[i]);
+				idArr.push(termIds[i]);
 			}
 		}
+		return Terms.find({_id:{$in:idArr}});
 	},
 	single:function(){
 		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
+		var idArr = [];
 		for (var i = 0; i < termIds.length; i++){
 			var type = Terms.findOne(termIds[i]).type;
 			if (type === "single"){
-				return Terms.findOne(termIds[i]);
+				idArr.push(termIds[i]);
 			}
 		}
+		return Terms.find({_id:{$in:idArr}});
 	},
 	description:function(){
 		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
+		var idArr = [];
 		for (var i = 0; i < termIds.length; i++){
 			var type = Terms.findOne(termIds[i]).type;
 			if (type === "input"){
-				return Terms.findOne(termIds[i]);
+				idArr.push(termIds[i]);
 			}
 		}
+		return Terms.find({_id:{$in:idArr}});
 	},
 	multiselect:function(){
+		Session.set("multiselect", true);
 		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
+		var idArr = [];
 		for (var i = 0; i < termIds.length; i++){
 			var type = Terms.findOne(termIds[i]).type;
 			if (type === "multiselect"){
-				return Terms.findOne(termIds[i]);
+				idArr.push(termIds[i]);
 			}
+		}
+		return Terms.find({_id:{$in:idArr}});
+	},
+	multiselectScript:function(){
+		if (Session.get("multiselect")){
+			return true;
 		}
 	},
 	number:function(){
 		var termIds = Graphs.findOne(Session.get("campaignLogic")).terms;
+		var idArr = [];
 		for (var i = 0; i < termIds.length; i++){
 			var type = Terms.findOne(termIds[i]).type;
 			if (type === "number"){
-				return Terms.findOne(termIds[i]);
+				idArr.push(termIds[i]);
 			}
 		}
+		return Terms.find({_id:{$in:idArr}});
 	},
 })
