@@ -180,17 +180,17 @@
                         -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="user-name">Gazda<i class="fa fa-angle-down"></i></span>
-                                <img class="img-circle avatar" src="assets/images/avatar1.jpg" width="40" height="40" alt="">
+                                <span class="user-name">{{currentUser.profile.name}}<i class="fa fa-angle-down"></i></span>
+                                <img class="img-circle avatar" src="{{currentUser.profile.avatar}}" width="40" height="40" alt="">
                             </a>
                             <ul class="dropdown-menu dropdown-list" role="menu">
-                                <li role="presentation"><a href="profile.html"><i class="icon-user"></i>Profile</a></li>
-                                <li role="presentation"><a href="calendar.html"><i class="icon-calendar"></i>Calendar</a></li>
+                                <li role="presentation"><a href="/profile"><i class="icon-user"></i>Profile</a></li>
+                                <li role="presentation"><a href="/kita"><i class="icon-calendar"></i>Calendar</a></li>
                                 <!--
                                 <li role="presentation"><a href="inbox.html"><i class="icon-envelope-open"></i>Inbox<span class="badge badge-success pull-right">4</span></a></li>
                                 -->
                                 <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a href="login.html"><i class="icon-key m-r-xs"></i>Log out</a></li>
+                                <li role="presentation"><a href="/" class="logout"><i class="icon-key m-r-xs"></i>Log out</a></li>
                             </ul>
                         </li>
                     </ul><!-- Nav -->
@@ -203,12 +203,16 @@
     <div class="page-sidebar sidebar">
         <div class="page-sidebar-inner slimscroll">
             <ul class="menu accordion-menu">
-                <li class="side-link-list active"><a href="/" class="side-link waves-effect waves-button"><span class="menu-icon fa fa-home"></span><p>Dashboard</p><span class="active-page active-page-spanner"></span></a></li>
+                <li class="side-link-list"><a href="/" class="side-link waves-effect waves-button"><span class="menu-icon fa fa-home"></span><p>Dashboard</p><span class="active-page active-page-spanner"></span></a></li>
                 <li class="side-link-list"><a href="/terms" class="side-link waves-effect waves-button"><span class="menu-icon fa fa-list-alt"></span><p>Terms</p><span class="active-page-spanner"></span></a></li>
                 <li class="side-link-list"><a href="/workflow" class="side-link waves-effect waves-button"><span class="menu-icon fa fa-sitemap"></span><p>Workflow</p><span class="active-page-spanner"></span></a></li>
-                <li class="side-link-list"><a href="/campaign" class="side-link waves-effect waves-button"><span class="menu-icon fa fa-bullhorn"></span><p>Campaign</p><span class="active-page-spanner"></span></a></li>
-                <li class="side-link-list"><a href="/users" class="side-link waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p>Users</p><span class="active-page-spanner"></span></a></li>
-
+                <li class="droplink" id="test"><a href="#" class="waves-effect waves-button"><span class="menu-icon fa fa-bullhorn"></span><p>Campaign</p><span class="arrow"></span></a>
+                    <ul class="sub-menu">
+                        <li class="sub-menu-link"><a href="/campaign-list">List</a></li>
+                        <li class="sub-menu-link"><a href="/campaign-new">New campaign</a></li>
+                    </ul>
+                </li>
+                <li class="side-link-list"><a href="/profile" class="side-link waves-effect waves-button"><span class="menu-icon fa fa-users"></span><p>Users</p><span class="active-page-spanner"></span></a></li>
                 <!--
                 <li class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon icon-envelope-open"></span><p>Mailbox</p><span class="arrow"></span></a>
                     <ul class="sub-menu">

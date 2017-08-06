@@ -1,0 +1,78 @@
+<template name="profile">
+	<div class="container">
+		<div class="row">
+		    <div class="col-xs-12 offset-md-4 col-md-4">
+		        <div class="user-profile-panel panel panel-white">
+		            <div class="panel-heading">
+		                <div class="panel-title">User profile</div>
+		            </div>
+		            <div class="panel-body">
+		            	{{#if editProfile}}
+			                <img src="{{currentUser.profile.avatar}}" class="user-profile-image img-circle" alt="">
+
+			                <p class="text-center">
+			                	<i class="fa fa-user-o" aria-hidden="true"></i>
+			                	<input class="form-control user-profile" type="text" name="updateName" placeholder="{{currentUser.profile.name}}">
+			                </p>
+			                <p class="text-center">
+			                	<i class="fa fa-building-o" aria-hidden="true"></i>
+			                	<input class="form-control user-profile" type="text" name="updateJob" placeholder="{{currentUser.profile.job}}">
+			                	</p>
+			                <hr>
+			                <ul class="list-unstyled text-center">
+				                    <li>
+				                    	<p>
+				                    		<i class="icon-pointer m-r-xs"></i>
+				                    		<input class="form-control user-profile" type="text" name="updateLocation" placeholder="{{currentUser.profile.location}}">
+				                    	</p>
+				                    </li>
+			                    <li>
+			                    	<p>
+			                    		<i class="icon-envelope-open m-r-xs"></i>
+			                    		<a href="#">
+			                    			<input class="form-control user-profile" type="text" name="updateEmail" placeholder="{{currentUser.profile.email}}">
+			                    		</a>
+			                    	</p>
+			                    </li>
+			                    <li>
+			                    	<p>
+			                    		<i class="icon-link m-r-xs"></i>
+			                    		<a href="#">
+			                    			<input class="form-control user-profile" type="text" name="updateWeb" placeholder="{{currentUser.profile.web}}">
+			                    		</a>
+			                    	</p>
+			                    </li>
+			                </ul>
+			                <hr>
+			                <button class="btn btn-info btn-block" id="edit-profile-save"><i class="icon-plus m-r-xs"></i>Edit</button>
+		            	{{else}}
+			                <img src="{{currentUser.profile.avatar}}" class="user-profile-image img-circle" alt="">
+			                <h4 class="text-center m-t-lg">{{currentUser.profile.name}}</h4>
+			                <p class="text-center">{{currentUser.profile.job}}</p>
+			                <hr>
+			                <ul class="list-unstyled text-center">
+			                    <li><p><i class="icon-pointer m-r-xs"></i>{{currentUser.profile.location}}</p></li>
+			                    <li><p><i class="icon-envelope-open m-r-xs"></i><a href="#">{{currentUser.profile.email}}</a></p></li>
+			                    <li><p><i class="icon-link m-r-xs"></i><a href="#">{{currentUser.profile.web}}</a></p></li>
+			                </ul>
+			                <hr>
+			                <button class="btn btn-info btn-block" id="edit-profile"><i class="icon-plus m-r-xs"></i>Edit profile details</button>
+			                <hr>
+			                <a href="#" id="toggle-change-password" data-toggle="collapse" data-target="#change-password">Change password</a>
+			                <div id="change-password" class="collapse">
+	                    		<input class="form-control user-profile" type="password" name="oldPassword" placeholder="old password">
+	                    		<br/>
+	                    		<input class="form-control user-profile" type="password" name="newPassword" placeholder="new password">
+	                    		<br/>
+	                    		<input class="form-control user-profile" type="password" name="repeatPassword" placeholder="repeat new password">
+	                    		<br/>
+			                	<button class="btn btn-default btn-block m-t-xs" id="edit-password">Change password</button>
+				            </div>
+		                {{/if}}
+		                
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</template>

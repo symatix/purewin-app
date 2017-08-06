@@ -42,24 +42,28 @@ Template.admin_dash_set_new.events({
 		if (name && termArr.length > 0){
 
 			var setObj = {
+				meta:{
+		        	owner:Meteor.userId(),
+		        	added:new Date(),
+				},
 				name: name,
 				terms: termArr,
 			};
-			Meteor.call("insertSet", setObj);
+			Meteor.call("insertSet", setObj, function(err, res){
+				if (!err){
+					toastr["success"]("Set "+setObj.name+" successfully added!");
+				} else {
+					toastr["warning"]("Error while adding set: "+err);
+				}
+			});
 			$(".js-btn-term-deSelect").click();
 			$("#set-new-name").val("");
 			$(".set-term-tags").children().remove();
 			$('[data-target="#dashboard-set-list"]').click();
 		} else if (children.length == 0){
-			var message = "<strong>No terms</strong> present in the set.";
-			var alert = "danger";
-			var timeout = 2000;
-			alertPopUp(message, alert, timeout);
+			toastr["warning"]("No terms present in the set.");
 		} else {
-			var message = "<strong>Name</strong> field is missing.";
-			var alert = "danger";
-			var timeout = 2000;
-			alertPopUp(message, alert, timeout);
+			toastr["warning"]("Name field is missing.");
 		}
 	},
 	'click .js-btn-term-cancel':function(e){
@@ -122,7 +126,7 @@ Template.admin_dash_set.events({
 		$("#set-term-new-"+id).prop("checked",false);
 		child.animate({
 			opacity:"0.1"
-		}, 1000, function(){
+		}, 600, function(){
 			Meteor.call("removeTermFromSet",parentId, id);
 		})
 		
@@ -131,7 +135,13 @@ Template.admin_dash_set.events({
 		var parent = $(e.target).closest(".panel-default");
 		var id = this._id;
 		parent.slideUp("slow", function(){
-			Meteor.call("deleteSet", id);
+			Meteor.call("deleteSet", id, function(err, res){
+				if (!err){
+					toastr["success"]("Set successfully deleted!");
+				} else {
+					toastr["warning"]("Error while deleting set: "+err);
+				}
+			});
 		})
 	},
 	'click .set-panel-edit':function(e){
@@ -186,7 +196,13 @@ Template.admin_dash_set.events({
 			var inputName = $('[name="set-newName"]').val();
 			if (inputName){
 				console.log()
-				Meteor.call("updateSetName", id, inputName);
+				Meteor.call("updateSetName", id, inputName, function(err, res){
+					if (!err){
+						toastr["success"]("Set "+inputName+" successfully updated!");
+					} else {
+						toastr["warning"]("Error while updating set: "+err);
+					}
+				});
 			}
 			$("[set-id='"+id+"']").css("display","block");
 			$("[input-holder='"+id+"']").empty();

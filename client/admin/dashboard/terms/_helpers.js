@@ -58,7 +58,6 @@ Template.admin_term_edit.helpers({
 		var multiSelect = Session.get("multiSelect");
 		var id = this._id;
 		var multiVal = Terms.findOne(id).type;
-		console.log(multiVal);
 
 		if (multiSelect === id){
 			return true;

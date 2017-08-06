@@ -14,3 +14,7 @@ select.form-control{
 	border-right:none !important;
 	border-bottom:1px solid lightgrey !important;
 }
+.campaign-solo:hover{
+	background-color:#F3F3F3;
+	cursor:pointer;
+}

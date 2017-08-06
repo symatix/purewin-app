@@ -20,7 +20,6 @@ Template.admin_dashboard_body.events({
 	'click .term-edit':function(e){
 		var id = this._id;
 		var type = Terms.findOne(id).type;
-		console.log(type);
 
 		$(".card-small-body").not("#card-small-body-"+id).addClass("card-disabled");
 
@@ -53,11 +52,16 @@ Template.admin_dashboard_body.events({
 			type: type,
 			values: values,
 		}
-		Meteor.call("updateTerm", id, termObj);
+		Meteor.call("updateTerm", id, termObj, function(err,res){
+			if (!err){
+				toastr["success"]("Term "+name+" successfully updated!");
+			} else {
+				toastr["warrning"]("Error while updating term: "+err);
+			}
+		});
 		Session.set("editId", false);
 		Session.set("multiSelect", false);
 		$(".card-active").removeClass("card-active");
-		$(".card-disabled").removeClass("card-disabled");
 		$(".card-disabled").removeClass("card-disabled");
 		$(".fa-times").toggleClass("fa-times fa-cog");
 	},
@@ -74,21 +78,28 @@ Template.admin_dashboard_body.events({
 		});
 		if (name){
 			var termObj = {
+				meta:{
+		        	owner:Meteor.userId(),
+		        	added:new Date(),
+				},
 				name: name,
 				type: type,
 				values: values,
 			}
-			Meteor.call("insertTerm", termObj);
+			Meteor.call("insertTerm", termObj,function(err,res){
+				if (!err){
+					toastr["success"]("Term "+termObj.name+" successfully inserted!");
+				} else {
+					toastr["warning"]("Error while inserting term: "+err);
+				}
+			});
+
 			Session.set("multiSelectNew", false);
 			var name = $("#form-term-name-new").val("");
 			var type = $("#form-term-type-new").val("input");
 			$(".term-panel-new").click();
 		} else {
-
-			var message = "<strong>Name</strong> field is missing.";
-			var alert = "danger";
-			var timeout = 2000;
-			alertPopUp(message, alert, timeout);
+			toastr["warning"]("Name field missing.");
 		}
 	},
 	'click .term-edit-cancel':function(e){
@@ -125,7 +136,13 @@ Template.admin_dashboard_body.events({
 			setIds.push(element._id);
 		})
 		console.log(sets, setIds);
-		Meteor.call("deleteTerm", id, setIds);
+		Meteor.call("deleteTerm", id, setIds, function(err,res){
+			if (!err){
+				toastr["success"]("Term "+name+" successfully deleted!");
+			} else {
+				toastr["warning"]("Error while deleting term: "+err);
+			}
+		});
 	},
 	'change select.table-term-input':function(e){
 		var id = this._id;
@@ -177,7 +194,7 @@ Template.admin_dashboard_body.events({
 			var message = "At least 2 values <strong>must</strong> be present for this type.";
 			var alert = "danger";
 			var timeout = 3000;
-			alertPopUp(message, alert, timeout);
+			toastr["warning"]("At least 2 values must be present for this type.");
 
 		}
 	},

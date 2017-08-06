@@ -1,0 +1,192 @@
+<template name="campaign_list">
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body"><!-- stats -->
+          <div class="content-header row">
+            <div class="content-header-left col-md-6 col-xs-12 mb-1">
+              <h2 class="content-header-title">Campaigns</h2>
+            </div>
+          </div>
+
+
+<div class="col-xs-2">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Available campaigns</h4>
+      <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+      <div class="heading-elements">
+        <ul class="list-inline mb-0">
+          <li><a class="btn-card-toggle active-card" data-toggle="collapse" data-target="#campaign-list"><i class="card-status fa fa-angle-down"></i></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-body collapse in" id="campaign-list">
+      <div class="container">
+            <div class="row">
+              <div class="col-xs-12 align-center">
+              	<table class="table">
+				  <thead>
+					    <tr>
+					      	<th>Name</th>
+					      	<th>Active</th>
+					    </tr>
+				  	</thead>
+  					<tbody>
+              		{{#each campaign}}
+				    <tr class="campaign-solo">
+				      <td>{{campaignName}}</td>
+				      <td><div id="campaign-status-{{_id}}"><span class="glyphicon glyphicon-{{status}}" style="color:{{statusColor}}"></span></div></td>
+				    </tr>
+              		{{/each}}
+				  </tbody>
+				</table>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="col-xs-10">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"><i class="icon-clipboard4"></i> Campaign Details</h4>
+        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+        <div class="heading-elements">
+          <ul class="list-inline mb-0">
+            <li><a class="btn-card-toggle inactive-card" data-toggle="collapse" data-target="#campaign-details"><i class="card-status fa fa-angle-down"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body form-body collapse" id="campaign-details">
+    {{#if campaignDetails}}
+        <div class="card-block">
+        	<div class="row">
+	        	<div class="col-xs-12 align-center">
+		            <h2>{{campaignDetails.campaignName}}</h2>
+          		</div>
+	            <br/>
+	            <div class="col-xs-4 align-center">
+	            	Start date <span class="label label-success" style="font-size:1.1em">{{campaignDetails.startDate}}</span>
+	            </div>
+	            <div class="col-xs-4 align-center">
+	            	End date <span class="label label-danger" style="font-size:1.1em">{{campaignDetails.endDate}}</span>
+	            </div>
+	            <div class="col-xs-4 align-center">
+	            	Status {{statusHtml}}
+	            </div>
+        		<div class="col-xs-12">
+	            <br/>
+					<div class="panel panel-default">
+					  <div class="panel-body">
+					 	<h4>Description</h4>
+					  	{{descriptionHtml}}
+					  </div>
+					</div>
+	          	</div>
+	         </div>
+          <div class="card-text">
+            <div class="row">
+              <div class="col-xs-12">
+              	<table class="table table-striped">
+				  <thead class="thead-inverse">
+					    <tr>
+					    	<th>Type</th>
+					      	<th>Name</th>
+					      	<th>Value</th>
+					    </tr>
+				  	</thead>
+  					<tbody>
+  					{{#if campaignDetails._details.input}}
+	              		{{#each campaignDetails._details.input}}
+					    <tr>
+					      <td>Input</td>
+					      <td>{{key}}</td>
+					      <td>{{value}}</td>
+					    </tr>
+	              		{{/each}}
+	              	{{/if}}
+  					{{#if campaignDetails._details.textarea}}
+	              		{{#each campaignDetails._details.textarea}}
+					    <tr>
+					      <td>Textarea</td>
+					      <td>{{key}}</td>
+					      <td>{{value}}</td>
+					    </tr>
+	              		{{/each}}
+	              	{{/if}}
+  					{{#if campaignDetails._details.single}}
+	              		{{#each campaignDetails._details.single}}
+					    <tr>
+					      <td>Single</td>
+					      <td>{{key}}</td>
+					      <td>{{value}}</td>
+					    </tr>
+	              		{{/each}}
+	              	{{/if}}
+  					{{#if campaignDetails._details.dropbox}}
+	              		{{#each campaignDetails._details.dropbox}}
+					    <tr>
+					      <td>Dropbox</td>
+					      <td>{{key}}</td>
+					      <td>{{value}}</td>
+					    </tr>
+	              		{{/each}}
+	              	{{/if}}
+  					{{#if campaignDetails._details.multiselect}}
+	              		{{#each campaignDetails._details.multiselect}}
+					    <tr>
+					      <td>Multiselect</td>
+					      <td>{{key}}</td>
+					      <td>{{#each value}} {{this}}{{#unless $last @index ../value.length}},{{/unless}}{{/each}}</td>
+					    </tr>
+	              		{{/each}}
+	              	{{/if}}
+  					{{#if campaignDetails._details.checkbox}}
+	              		{{#each campaignDetails._details.checkbox}}
+					    <tr>
+					      <td>Checkbox</td>
+					      <td>{{key}}</td>
+					      <td>{{#each value}} {{this}}{{#unless $last @index ../value.length}},{{/unless}} {{/each}}</td>
+					    </tr>
+	              		{{/each}}
+	              	{{/if}}
+  					{{#if campaignDetails._details.number}}
+	              		{{#each campaignDetails._details.number}}
+					    <tr>
+					      <td>Number</td>
+					      <td>{{key}}</td>
+					      <td>{{firstVal}} <i>{{operatorDisplay}}</i> {{lastVal}}</td>
+					    </tr>
+	              		{{/each}}
+	              	{{/if}}
+				  </tbody>
+				</table>
+              </div>
+
+              <div class="col-xs-12 form-actions align-children-center">
+                <button id="btn-delete-campaign" class="btn btn-outline-danger">
+                  <i class="icon-check2"></i> Delete
+                </button>
+                <button id="btn-edit-campaign" class="btn btn-outline-info">
+                  <i class="icon-check2"></i> Edit
+                </button>
+              </div>
+            </div>
+          </div>
+          </div>
+        	{{/if}} <!-- if campaign details false -->
+        </div>
+      </div>
+    </div>
+
+
+</div>
+</div>
+</div>
+
+
+</template>

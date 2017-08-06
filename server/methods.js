@@ -56,5 +56,43 @@ Meteor.methods({
 				return result;
 			}
 		});
-	}
+	},
+	deleteCampaign:function(id){
+		Campaigns.remove(id);
+	},
+	editCampaign:function(data, id){
+		var addedNew = data.meta.added;
+		var addedOld = Campaigns.findOne(id).meta.added;
+		if (addedOld != addedNew){
+			data.meta.added = addedOld;
+			data.meta.edited = addedNew;
+		}
+		Campaigns.update({_id:id},{$set:data}, {multi: true});
+	},
+	editUser:function(id, user){
+		// checking for avatar
+		if (!user.avatar){
+			var avatar = Meteor.users.findOne(id).profile.avatar;
+			user.avatar = avatar;
+		}
+
+		// changing email
+		var oldMail = Meteor.users.findOne(id).profile.email;
+		Accounts.addEmail(id, user.email);
+		Accounts.removeEmail(id, oldMail);
+		console.log(user);
+		
+		// update profile
+		return Meteor.users.update({_id:id}, {$set: {profile: user}}, function(err, result){
+			if (err){
+				console.log(err);
+			} else if (result){
+				console.log("User updated: "+result);
+				return result;
+			}
+		});
+		
+	},
+	updatePassword:function(oldPw, newPw){
+	},
 });

@@ -1,5 +1,71 @@
+Template.campaign_list.helpers({
+	campaign:function(){
+		return Campaigns.find();
+	},
+	unlockDetails:function(){
+		if (Session.get("campaignDetails")){
+			return true;
+		}
+	},
+	campaignDetails:function(){
+		return Campaigns.findOne(Session.get("campaignDetails"));
+	},
+	statusHtml:function(){
+		var id = Session.get("campaignDetails");
+		var startDate = new Date(Campaigns.findOne(id).startDate);
+		var endDate = new Date(Campaigns.findOne(id).endDate);
+		var currentDate = new Date();
+		if (startDate < currentDate && currentDate < endDate){
+			var string = '<span class="label label-success" style="font-size:1.1em">active</span>';
+			return new Handlebars.SafeString(string);
+		} else {
+			var string = '<span class="label label-danger" style="font-size:1.1em">not active</span>';
+			return new Handlebars.SafeString(string);
+		}
+	},
+	descriptionHtml:function(){
+		var id = Session.get("campaignDetails");
+		var string = Campaigns.findOne(id).campaignDescription;
+		return new Handlebars.SafeString(string);
+	},
+	status:function(){
+		var id = this._id;
+		var startDate = new Date(Campaigns.findOne(id).startDate);
+		var endDate = new Date(Campaigns.findOne(id).endDate);
+		var currentDate = new Date();
+		if (startDate < currentDate && currentDate < endDate){
+			return "ok";
+		} else {
+			return "remove";
+		}
+	},
+	statusColor:function(){
+		var id = this._id;
+		var startDate = new Date(Campaigns.findOne(id).startDate);
+		var endDate = new Date(Campaigns.findOne(id).endDate);
+		var currentDate = new Date();
+		if (startDate < currentDate && currentDate < endDate){
+			return "#009900";
+		} else {
+			return "#e60000";
+		}
+	},
+	operatorDisplay:function(){
+		var operator = this.operator;
+		if (operator === "equals"){
+			return false;
+		} else if (operator === "range"){
+			return "to";
+		} else if (operator === "greater"){
+			return "or higher";
+		} else if (operator === "less"){
+			return "or lower";
+		}
+	}
+})
 
-Template.campaign.helpers({
+
+Template.campaign_new.helpers({
 	graphThumbs: function(){
 		return Graphs.find();
 	},
@@ -20,6 +86,16 @@ Template.campaign.helpers({
 	link: function(){
 		var id = this._id;
 		return GraphThumbs.findOne({name:id+".png"}).link();
+	},
+	linkCampaign:function(){
+		return GraphThumbs.findOne({name:Session.get("campaignLogic")+".png"}).link();
+	},
+	logicId:function(){
+		var logicId = Session.get("campaignLogic");
+		return logicId;
+	},
+	nameCampaign:function(){
+		return Graphs.findOne(Session.get("campaignLogic")).name;
 	},
 	logicSelected:function(){
 		if (Session.get("campaignLogic")){
@@ -108,5 +184,12 @@ Template.campaign.helpers({
 			}
 		}
 		return Terms.find({_id:{$in:idArr}});
+	},
+})
+
+Template.campaign_edit.helpers({
+	multipleValues:function(){
+		var values = Terms.findOne(this.id).values;
+		return values;
 	},
 })

@@ -56,6 +56,10 @@ Template.flowchart_paper.events({
 	        name: name,
 	        graph:setGraph,
 	        terms: terms,
+			meta:{
+	        	owner:Meteor.userId(),
+	        	added:new Date(),
+			},
 	    }
 
     	Meteor.call("insertGraph", graphData, function(err, result){
@@ -81,9 +85,7 @@ Template.flowchart_paper.events({
 					// create png uri and pass it to callback for data insert
 				    var image = new Image();
 				    image.src = uri;
-				    console.log(image.width, image.height);
 					image.onload = function() {
-						console.log("creating canvas");
 						var canvas = document.createElement('canvas');
 						canvas.width = image.width;
 						canvas.height = image.height;
@@ -98,6 +100,9 @@ Template.flowchart_paper.events({
 						console.log(err);
 					}
 				});
+				toastr["success"]("Workflow "+graphData.name+" successfully added!");
+			} else {
+				toastr["warning"]("Error while adding workflow: "+err);
 			}
     	});
 	}

@@ -39,6 +39,9 @@ tr:not(.table-headings):hover{
 .align-center{
   text-align:center;
 }
+.align-left{
+  text-align:left;
+}
 .fa, .sorting-icon{
   cursor:pointer; 
   cursor:hand;
@@ -461,7 +464,9 @@ input[type=range]:focus::-ms-fill-upper {
   color:#373a3c;
 }
 div.p-2.media-body:hover{
-  background:#CFD8DC;
+  background:#607D8B;
+  color:white;
+  transition: all 0.3s ease;
 }
 
 .table-action:hover{

@@ -3,6 +3,8 @@
     {{> head}}     
 </head>
 <body class="compact-menu">
+
+{{#if currentUser}}
     <div class="cd-overlay"></div>
         {{> nav_search}}
     <main class="page-content content-wrap">
@@ -16,5 +18,47 @@
         </div>
     </main>
     <div class="cd-overlay"></div>
+{{else}}   
+    {{#unless newUser}}
+        {{#if restorePassword}}
+            {{>restore}}
+        {{else}}
+            {{#if resetPassword}}
+                {{>password_reset}}
+            {{else}}
+                {{>login}}
+            {{/if}}
+        {{/if}}
+    {{else}}
+        {{>register}}
+    {{/unless}}
+    <script>
+        var script   = document.createElement("script");
+        script.type  = "text/javascript";
+        script.src   = "assets/plugins/toastr/toastr.min.js";
+
+        $("body").append(script);
+        script.onload = function(){
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }   
+        }
+    </script>
+{{/if}}
+
 </body>
 </template>

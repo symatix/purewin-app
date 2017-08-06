@@ -1,0 +1,9 @@
+main.page-content > .page-login{
+	position:absolute;
+	background-image: url("assets/images/signup-bg.jpg");
+	height:100% !important;
+	width:100% !important;
+}
+.panel-login{
+	top:100px;
+}
