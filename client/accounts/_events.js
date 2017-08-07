@@ -80,8 +80,7 @@ Template.restore.events({
 		});
     },
     'click #forgot-password':function(e){
-    	console.log("kaj?");
-    	Session.set("restorePassword",false);
+    	Session.clear();
     }
 });
 

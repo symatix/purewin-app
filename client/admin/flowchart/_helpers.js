@@ -20,6 +20,13 @@ Template.flowchart_top.helpers({
 	},
 	link: function(){
 		var id = this._id;
-		return GraphThumbs.findOne({name:id+".png"}).link();
+		var link = GraphThumbs.findOne({name:id+".png"}).link();
+		return link;
+	}
+})
+
+Template.flowchart_paper.helpers({
+	loadGraph:function(){
+		return Session.get("loadGraph");
 	}
 })

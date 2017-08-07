@@ -19,14 +19,39 @@
 
         {{#EasySearch.Each index=flowchartIndex }}
           <div class="col-xs-4 col-md-3 align-center campaign-logic">
-            <h5>{{name}}</h5>
-            <img src="{{link}}" alt="{{name}}">
-            <!--
-            <div class="" id="graph-tumb-{{_id}}">
-              {{graphHtml}}
-            </div>
-            -->
+                <h5>{{name}}</h5>
+                <img src="{{link}}" alt="{{name}}">
+                <div class="form-actions align-children-center">
+                  <button type="button" id="btn-delete-graph" class="btn btn-outline-danger btn-block reset-form mr-1">
+                    <i class="icon-cross2"></i> Delete
+                  </button>
+                  <button type="submit" id="btn-load-graph" class="btn btn-outline-info btn-block">
+                    <i class="icon-check2"></i> Load
+                  </button>
+                </div>
           </div>
+
+          <!--
+
+          <div class="col-xs-4 col-md-3 align-center campaign-logic">
+            <div class="row">
+              <div class="col-xs-8">
+                <h5>{{name}}</h5>
+                <img src="{{link}}" alt="{{name}}">
+              </div>
+              <div class="col-xs-4">
+                <div class="form-actions align-children-center">
+                  <button type="button" id="btn-delete-graph" class="btn btn-outline-danger btn-block reset-form mr-1">
+                    <i class="icon-cross2"></i> Delete
+                  </button>
+                  <button type="submit" id="btn-load-graph" class="btn btn-outline-info btn-block">
+                    <i class="icon-check2"></i> Load
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          -->
         {{/EasySearch.Each}}
       </div>
     </div>

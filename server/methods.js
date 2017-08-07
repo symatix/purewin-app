@@ -50,6 +50,17 @@ Meteor.methods({
 			}
 		});
 	},
+	updateGraph:function(data){
+		GraphThumbs.remove({"name":data._id+".png"});
+		Graphs.update({_id:data._id}, {$set:data});
+	},
+	insertGraphThumb:function(data){
+		GraphThumbs.insert(data);
+	},
+	deleteGraph:function(id){
+		Graphs.remove(id);
+		GraphThumbs.remove({"name":id+".png"});
+	},
 	insertCampaign:function(data){
 		Campaigns.insert(data, function(err, result){
 			if(!err){
@@ -92,7 +103,5 @@ Meteor.methods({
 			}
 		});
 		
-	},
-	updatePassword:function(oldPw, newPw){
 	},
 });

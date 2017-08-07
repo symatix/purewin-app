@@ -12,7 +12,12 @@ Router.route("/profile", function(){
   Session.clear();
   Session.set("route", "/profile");
   this.render('profile');
-})
+});
+Router.route("/calendar", function(){
+  Session.clear();
+  Session.set("route", "/calendar");
+  this.render('calendar');
+});
 Router.route("/terms", function(){ 
   Session.clear();
   Session.set("route", "/terms");

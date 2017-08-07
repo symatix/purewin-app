@@ -39,6 +39,8 @@ Session.set("multiselect", false);
 // used to display campaign details
 Session.set("campaignDetails",false);
 
+// when user loads graph, this stores the id of the graph
+Session.set("loadGraph", false);
 
 Template.registerHelper('$eq', function (a, b) {
       return a === b;
