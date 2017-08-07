@@ -6,23 +6,16 @@
         <div class="content-body"><!-- stats -->
           <div class="content-header row">
             <div class="content-header-left col-md-6 col-xs-12 mb-1">
-              <h2 class="content-header-title">Pure Win</h2>
+              <h2 class="content-header-title">Campaign Overview</h2>
             </div>
           </div>
-
-    <div class="row">
-        <div class="col-xs-12 mt-1 mb-3">
-            <h4>User dashboard</h4>
-            <p>Campaign Calendar</p>
-            <hr>
-        </div>
-    </div>
+          <hr>
 
 
   <div class="offset-xs-1 col-xs-10">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title"><i class="icon-clipboard4"></i>Campaign Calendar</h4>
+        <h4 class="card-title"><i class="icon-clipboard4"></i>Calendar</h4>
         <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
         <div class="heading-elements">
           <ul class="list-inline mb-0">
@@ -39,7 +32,8 @@
         <div class="card-block">
           
           <div class="card-text">
-            <div id="calendar"></div>
+            <div id="calendar">
+            </div>
             </div>
           </div>
         </div>
@@ -58,25 +52,4 @@
 
 </div>
 </div>
-<script>
-
-	$('#calendar').fullCalendar({
-    events: [
-        {
-            title  : 'event1',
-            start  : '2017-08-01'
-        },
-        {
-            title  : 'event2',
-            start  : '2017-01-05',
-            end    : '2017-08-07'
-        },
-        {
-            title  : 'event3',
-            start  : '2010-01-09T12:30:00',
-            allDay : false // will make the time show
-        }
-    ]
-});
-</script>
 </template>

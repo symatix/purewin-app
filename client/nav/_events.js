@@ -20,5 +20,19 @@ Template.nav.events({
     'click .logout': function(e){
         e.preventDefault();
         Meteor.logout();
-    }
+    },
+    'click .goTo-calendar':function(e){
+		$(".droplink").removeClass("open active");
+		$(".sub-menu").slideUp();
+		$(".side-link-list").removeClass("active");
+		$(".droplink").removeClass("active");
+		$(".active-page").removeClass("active-page");
+    },
+    'click .goTo-profile':function(e){
+		$(".droplink").removeClass("open active");
+		$(".sub-menu").slideUp();
+		$(".side-link-list").removeClass("active");
+		$(".droplink").removeClass("active");
+		$(".active-page").removeClass("active-page");
+    },
 })
