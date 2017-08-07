@@ -91,6 +91,7 @@ getCampaignData = function(){
 				//gotta get them numbers and ranges
 				elem.each(function(){
 					var id = $(this).attr("data-id");
+					var key = $(this).attr("data-name");
 					var numFunc = $(this).val();
 					var firstVal = $(this).parent().prev().children("input").val();
 					var lastVal = $(this).parent().next().children("input").val();
@@ -98,6 +99,7 @@ getCampaignData = function(){
 					if (numFunc === "range"){
 						obj = {
 							id:id,
+							key:key,
 							operator:numFunc,
 							firstVal:firstVal,
 							lastVal:lastVal,
@@ -107,6 +109,7 @@ getCampaignData = function(){
 					} else {
 						obj = {
 							id:id,
+							key:key,
 							operator:numFunc,
 							firstVal:firstVal,
 						}
