@@ -1,58 +1,60 @@
 <template name="admin_term_edit">
-	<tr class="table-selected" id="table-term-{{_id}}">
-	<td>
-		<input class="table-term-input" id="table-term-name-{{_id}}" type="text" placeholder="{{name}}">
-	</td>
-	<td>
-		<select class="table-term-input table-term-type-edit" data-name="term-type" id="table-term-type-{{_id}}">';
-				<option value="{{type}}" selected="selected">{{type}}</option>
-			{{#each types}}
-				<option value="{{this}}">{{this}}</option>
-			{{/each}}
-
-		</select>
-	</td>
-	<td>
-		<i class="term-edit-active term-edit-save fa fa-check" aria-hidden="true"></i>
-		<i class="term-edit-active term-edit-cancel fa fa-times" aria-hidden="true"></i><br/>
-		<i class="term-edit-active term-edit-delete fa fa-trash-o" aria-hidden="true"></i>
-		<button type="button" id="term-collapse-btn-{{_id}}" class="hidden" data-toggle="collapse" data-target="#term-collapse-{{_id}}">Open value panel</button>
-	</td>
-	</tr>
-	{{#if multiVal}}
-		{{#if multiSelect}}
-		<tr class="table-selected-values" id="table-collapse-container-{{_id}}">
-			<td colspan="3">
-				<div class="term-values" id="term-collapse-{{_id}}">
-					<i class="term-custom-value term-custom-value-add fa fa-plus-square" aria-hidden="true"></i>
-					<i class="term-custom-value term-custom-value-sub fa fa-minus-square" aria-hidden="true"></i>
-					<br/>
-					{{#each multiVal}}
-					<label class="term-multi-values" data-index="{{$add @index 1}}" for="term-values-{{_id}}" style="white-space:nowrap;">
-						Value {{$add @index 1}}&emsp;<input class="table-term-val-input" type="text" value="{{this}}" name="multival">
-					</label>
-					{{/each}}
-				</div>
-			</td>
-		</tr>
-		{{/if}}
-	{{else}}
-		{{#if multiSelect}}
-		<tr class="table-selected-values" id="table-collapse-container-{{_id}}">
-			<td colspan="3">
-				<div class="term-values" id="term-collapse-{{_id}}">
-					<i class="term-custom-value term-custom-value-add fa fa-plus-square" aria-hidden="true"></i>
-					<i class="term-custom-value term-custom-value-sub fa fa-minus-square" aria-hidden="true"></i>
-					<br/>
-					<label class="term-multi-values" data-index="1" for="term-values-{{_id}}" style="white-space:nowrap;">
-						Value 1&emsp;<input class="table-term-val-input" type="text" value="" name="multival">
-					</label>
-					<label class="term-multi-values" data-index="2" for="term-values-{{_id}}" style="white-space:nowrap;">
-						Value 2&emsp;<input class="table-term-val-input" type="text" value="" name="multival">
-					</label>
-				</div>
-			</td>
-		</tr>
-		{{/if}}
-	{{/if}}
+    <tr class="table-selected" id="table-term-{{_id}}">
+        <td>
+            <input class="table-term-input" id="table-term-name-{{_id}}" type="text" placeholder="{{name}}">
+        </td>
+        <td>
+            <select class="table-term-input table-term-type-edit" data-name="term-type" id="table-term-type-{{_id}}">';
+                <option value="{{type}}" selected="selected">{{type}}</option>
+                {{#each types}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </td>
+        <td>
+            <i class="term-edit-active term-edit-save fa fa-check" aria-hidden="true"></i>
+            <i class="term-edit-active term-edit-cancel fa fa-times" aria-hidden="true"></i>
+            <br/>
+            <i class="term-edit-active term-edit-delete fa fa-trash-o" aria-hidden="true"></i>
+            <button type="button" id="term-collapse-btn-{{_id}}" class="hidden" data-toggle="collapse" data-target="#term-collapse-{{_id}}">Open value panel</button>
+        </td>
+    </tr>
+    {{#if multiVal}} 
+	    {{#if multiSelect}}
+	    <tr class="table-selected-values" id="table-collapse-container-{{_id}}">
+	        <td colspan="3">
+	            <div class="term-values" id="term-collapse-{{_id}}">
+	                <i class="term-custom-value term-custom-value-add fa fa-plus-square" aria-hidden="true"></i>
+	                <i class="term-custom-value term-custom-value-sub fa fa-minus-square" aria-hidden="true"></i>
+	                <br/> {{#each multiVal}}
+	                <label class="term-multi-values" data-index="{{$add @index 1}}" for="term-values-{{_id}}" style="white-space:nowrap;">
+	                    Value {{$add @index 1}}&emsp;
+	                    <input class="table-term-val-input" type="text" value="{{this}}" name="multival">
+	                </label>
+	                {{/each}}
+	            </div>
+	        </td>
+	    </tr>
+	    {{/if}} 
+    {{else}} 
+	    {{#if multiSelect}}
+	    <tr class="table-selected-values" id="table-collapse-container-{{_id}}">
+	        <td colspan="3">
+	            <div class="term-values" id="term-collapse-{{_id}}">
+	                <i class="term-custom-value term-custom-value-add fa fa-plus-square" aria-hidden="true"></i>
+	                <i class="term-custom-value term-custom-value-sub fa fa-minus-square" aria-hidden="true"></i>
+	                <br/>
+	                <label class="term-multi-values" data-index="1" for="term-values-{{_id}}" style="white-space:nowrap;">
+	                    Value 1&emsp;
+	                    <input class="table-term-val-input" type="text" value="" name="multival">
+	                </label>
+	                <label class="term-multi-values" data-index="2" for="term-values-{{_id}}" style="white-space:nowrap;">
+	                    Value 2&emsp;
+	                    <input class="table-term-val-input" type="text" value="" name="multival">
+	                </label>
+	            </div>
+	        </td>
+	    </tr>
+	    {{/if}} 
+    {{/if}}
 </template>

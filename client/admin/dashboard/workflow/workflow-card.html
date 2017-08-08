@@ -1,33 +1,33 @@
 <template name="admin_dash_workflow">
     <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Workflow Logic</h4>
-        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-        <div class="heading-elements">
-          <ul class="list-inline mb-0">
-            <li><a class="btn-card-toggle active-card" data-toggle="collapse" data-target="#dashboard-workflow-list"><i class="card-status fa fa-angle-down"></i></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="card-body collapse in" id="dashboard-workflow-list">
-        <div class="container">
-            <div class="card-container">
-            	<div class="row">
-                {{#transition in="fadeIn:1200"}}
-        				{{#each graph}}
-        				<div class="col-xs-6 col-lg-4">
-        					<div class="panel panel-default">
-        						<div class="panel-heading">{{name}}</div>
-        						<div class="" id="graph-tumb-{{_id}}">
-                                    <img src="{{link}}" alt="{{name}}">
-        						</div>
-        					</div>
-        				</div>
-        				{{/each}}
-                {{/transition}}
-				      </div>
+        <div class="card-header">
+            <h4 class="card-title">Workflow Logic</h4>
+            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+            <div class="heading-elements">
+                <ul class="list-inline mb-0">
+                    <li><a class="btn-card-toggle active-card" data-toggle="collapse" data-target="#dashboard-workflow-list"><i class="card-status fa fa-angle-down"></i></a></li>
+                </ul>
             </div>
         </div>
-      </div>
+        <div class="card-body collapse in" id="dashboard-workflow-list">
+            <div class="container">
+                <div class="card-container">
+                    <div class="row">
+                        {{#transition in="fadeIn:1200"}} 
+                        {{#each graph}}
+                        <div class="col-xs-6 col-lg-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">{{name}}</div>
+                                <div class="" id="graph-tumb-{{_id}}">
+                                    <img src="{{link}}" alt="{{name}}">
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}} 
+                        {{/transition}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

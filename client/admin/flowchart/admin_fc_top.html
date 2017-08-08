@@ -1,101 +1,53 @@
 <template name="flowchart_top">
-
-
-
-<div class="card">
-  <div class="card-header">
-    <h4 class="card-title">Logic</h4>
-    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-    <div class="heading-elements">
-      <ul class="list-inline mb-0">
-        <li><a class="btn-card-toggle active-card flowchart-logic" data-toggle="collapse" data-target="#flowchart-logic"><i class="card-status fa fa-angle-down"></i></a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="card-body collapse in" id="flowchart-logic">
-    <div class="container">
-      <div class="row">
-
-
-        {{#EasySearch.Each index=flowchartIndex }}
-        <div class="col-xs-4 col-md-3 col-lg-2">
-          <div class="card card-campaign align-center" style="width:150px">
-            <img src="{{link}}" alt="{{name}}">
-            <div class="card-block" style="padding:0 10px">
-              <h4 class="card-title">{{name}}</h4>
-                <button type="button" id="btn-delete-graph" class="btn btn-outline-danger btn-block reset-form mr-1">
-                  <i class="icon-cross2"></i> Delete
-                </button>
-                <button type="submit" id="btn-load-graph" class="btn btn-outline-info btn-block">
-                  <i class="icon-check2"></i> Load
-                </button>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Logic</h4>
+            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+            <div class="heading-elements">
+                <ul class="list-inline mb-0">
+                    <li><a class="btn-card-toggle active-card flowchart-logic" data-toggle="collapse" data-target="#flowchart-logic"><i class="card-status fa fa-angle-down"></i></a></li>
+                </ul>
             </div>
-          </div>
         </div>
-        {{/EasySearch.Each}}
-      </div>
+        <div class="card-body collapse in" id="flowchart-logic">
+            <div class="container">
+                <div class="row">
+                    {{#EasySearch.Each index=flowchartIndex }}
+                    <div class="col-xs-4 col-md-3 col-lg-2">
+                        <div class="card card-campaign align-center" style="width:150px">
+                            <img src="{{link}}" alt="{{name}}">
+                            <div class="card-block" style="padding:0 10px">
+                                <h4 class="card-title">{{name}}</h4>
+                                <button type="button" id="btn-delete-graph" class="btn btn-outline-danger btn-block reset-form mr-1">
+                                    <i class="icon-cross2"></i> Delete
+                                </button>
+                                <button type="submit" id="btn-load-graph" class="btn btn-outline-info btn-block">
+                                    <i class="icon-check2"></i> Load
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {{/EasySearch.Each}}
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-header">
-    <h4 class="card-title">Elements</h4>
-    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-    <div class="heading-elements">
-      <ul class="list-inline mb-0">
-        <li><a class="btn-card-toggle active-card flowchart-elements" data-toggle="collapse" data-target="#flowchart-elements"><i class="card-status fa fa-angle-down"></i></a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="card-body collapse in" id="flowchart-elements">
-    <div class="container">
-      <div class="stencil-holder">
-        <div id="stencil" class="paper" style=""></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-  <!-- left menu -->
-  <!--
-      <div class="card">
+    <div class="card">
         <div class="card-header">
-          <h5 class="card-title">Logic elements</h5>
-          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-          <div class="heading-elements">
-            <ul class="list-inline mb-0">
-              <li><a data-action="collapse"><i class="card-status fa fa-angle-down"></i></a></li>
-            </ul>
-          </div>
+            <h4 class="card-title">Elements</h4>
+            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+            <div class="heading-elements">
+                <ul class="list-inline mb-0">
+                    <li><a class="btn-card-toggle active-card flowchart-elements" data-toggle="collapse" data-target="#flowchart-elements"><i class="card-status fa fa-angle-down"></i></a></li>
+                </ul>
+            </div>
         </div>
-        <div class="card-body collapse in collapse in">
-
-          <div class="stencil-holder">
-            <div id="stencil" class="paper" style=""></div>
-          </div>
+        <div class="card-body collapse in" id="flowchart-elements">
+            <div class="container">
+                <div class="stencil-holder">
+                    <div id="stencil" class="paper" style=""></div>
+                </div>
+            </div>
         </div>
-
-      </div>
-
-
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title">Workflow charts</h5>
-          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-          <div class="heading-elements">
-            <ul class="list-inline mb-0">
-              <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card-body collapse in collapse">
-          <ul class="list-group" id="workflow-panel">
-          </ul>
-        </div>
-
-      </div>
-   -->
+    </div>
 </template>

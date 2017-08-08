@@ -1,44 +1,46 @@
 <template name="PureWin">
-<head> 
-    {{> head}}     
-</head>
-<body class="compact-menu">
 
-{{#if currentUser}}
-    <div class="cd-overlay"></div>
+    <head>
+        {{> head}}
+    </head>
+
+    <body class="compact-menu">
+        {{#if currentUser}}
+        <div class="cd-overlay"></div>
         {{> nav_search}}
-    <main class="page-content content-wrap">
-        {{> nav}}
-        <div class="page-inner">
-            {{> breadcrumbs}}           
-            <div id="main-wrapper">
-                {{> yield}}<!-- page content -->
+        <main class="page-content content-wrap">
+            {{> nav}}
+            <div class="page-inner">
+                {{> breadcrumbs}}
+                <div id="main-wrapper">
+                    {{> yield}}
+                    <!-- page content -->
+                </div>
+                {{> footer}}
             </div>
-            {{> footer}}
-        </div>
-    </main>
-    <div class="cd-overlay"></div>
-{{else}}   
-    {{#unless newUser}}
-        {{#if restorePassword}}
-            {{>restore}}
-        {{else}}
-            {{#if resetPassword}}
-                {{>password_reset}}
-            {{else}}
-                {{>login}}
-            {{/if}}
-        {{/if}}
-    {{else}}
-        {{>register}}
-    {{/unless}}
-    <script>
-        var script   = document.createElement("script");
-        script.type  = "text/javascript";
-        script.src   = "assets/plugins/toastr/toastr.min.js";
+        </main>
+        <div class="cd-overlay"></div>
+        {{else}} 
+            {{#unless newUser}} 
+                {{#if restorePassword}} 
+                    {{>restore}} 
+                {{else}} 
+                    {{#if resetPassword}} 
+                        {{>password_reset}} 
+                    {{else}} 
+                        {{>login}} 
+                    {{/if}} 
+                {{/if}} 
+            {{else}} 
+                {{>register}} 
+            {{/unless}}
+        <script>
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "assets/plugins/toastr/toastr.min.js";
 
         $("body").append(script);
-        script.onload = function(){
+        script.onload = function() {
             toastr.options = {
                 "closeButton": false,
                 "debug": false,
@@ -55,10 +57,9 @@
                 "hideEasing": "linear",
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
-            }   
+            }
         }
-    </script>
-{{/if}}
-
-</body>
+        </script>
+        {{/if}}
+    </body>
 </template>

@@ -1,71 +1,72 @@
 <template name="admin_term_new">
-
     <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">New term</h4>
-        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-        <div class="heading-elements">
-          <ul class="list-inline mb-0">
-            <li><a class="btn-card-toggle inactive-card term-panel-new" data-toggle="collapse" data-target="#dashboard-term-new"><i class="card-status fa fa-angle-down"></i></a></li>
-          </ul>
+        <div class="card-header">
+            <h4 class="card-title">New term</h4>
+            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+            <div class="heading-elements">
+                <ul class="list-inline mb-0">
+                    <li><a class="btn-card-toggle inactive-card term-panel-new" data-toggle="collapse" data-target="#dashboard-term-new"><i class="card-status fa fa-angle-down"></i></a></li>
+                </ul>
+            </div>
         </div>
-      </div>
-      <div class="card-body collapse" id="dashboard-term-new">
-        <div class="container">
-          <div class="terms">
-			<div class="table-responsive">          
-			 	<table class="table">
-				    <thead>
-				      <tr>
-				        <th>Name</th>
-				        <th>Type</th>
-				        <th>&nbsp;</th>
-				      </tr>
-				    </thead>
-				    <tbody>
-						<tr class="table-selected" id="table-term-{{_id}}">
-						<td>
-							<input class="table-term-input table-term-input-new" id="form-term-name-new" type="text" placeholder="">
-						</td>
-						<td>
-							<select class="table-term-input" data-name="term-type" id="form-term-type-new">
-								{{#each type}}
-									<option value="{{this}}">{{this}}</option>
-								{{/each}}
-
-							</select>
-						</td>
-						<td>
-							<i class="term-edit-active term-new-save fa fa-check" aria-hidden="true"></i>
-							<i class="term-edit-active term-new-cancel fa fa-times" aria-hidden="true"></i><br/>
-							<i class="term-edit-active term-new-delete fa fa-trash-o" aria-hidden="true"></i>
-							<button type="button" id="term-collapse-btn-{{_id}}" class="hidden" data-toggle="collapse" data-target="#term-collapse-{{_id}}">Open value panel</button>
-						</td>
-						</tr>
-				    			{{#transition in="zoomInLeft:200"}}
-							{{#if multiSelect}}
-							<tr class="table-selected-values" id="table-collapse-container-new">
-								<td colspan="3">
-									<div class="term-values" id="term-collapse-new">
-										<i class="term-custom-value term-custom-value-add fa fa-plus-square" aria-hidden="true"></i>
-										<i class="term-custom-value term-custom-value-sub fa fa-minus-square" aria-hidden="true"></i>
-										<br/>
-										<label class="term-multi-values" data-index="1" for="term-values-{{_id}}" style="white-space:nowrap;">
-											Value 1&emsp;<input class="table-term-val-new-input" type="text" value="" name="multival">
-										</label>
-										<label class="term-multi-values" data-index="2" for="term-values-{{_id}}" style="white-space:nowrap;">
-											Value 2&emsp;<input class="table-term-val-new-input" type="text" value="" name="multival">
-										</label>
-									</div>
-								</td>
-							</tr>
-							{{/if}}	    
-								{{/transition}}
-						</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-	</div>
-</div>
+        <div class="card-body collapse" id="dashboard-term-new">
+            <div class="container">
+                <div class="terms">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-selected" id="table-term-{{_id}}">
+                                    <td>
+                                        <input class="table-term-input table-term-input-new" id="form-term-name-new" type="text" placeholder="">
+                                    </td>
+                                    <td>
+                                        <select class="table-term-input" data-name="term-type" id="form-term-type-new">
+                                            {{#each type}}
+                                            <option value="{{this}}">{{this}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <i class="term-edit-active term-new-save fa fa-check" aria-hidden="true"></i>
+                                        <i class="term-edit-active term-new-cancel fa fa-times" aria-hidden="true"></i>
+                                        <br/>
+                                        <i class="term-edit-active term-new-delete fa fa-trash-o" aria-hidden="true"></i>
+                                        <button type="button" id="term-collapse-btn-{{_id}}" class="hidden" data-toggle="collapse" data-target="#term-collapse-{{_id}}">Open value panel</button>
+                                    </td>
+                                </tr>
+                                {{#transition in="zoomInLeft:200"}} 
+                                {{#if multiSelect}}
+                                <tr class="table-selected-values" id="table-collapse-container-new">
+                                    <td colspan="3">
+                                        <div class="term-values" id="term-collapse-new">
+                                            <i class="term-custom-value term-custom-value-add fa fa-plus-square" aria-hidden="true"></i>
+                                            <i class="term-custom-value term-custom-value-sub fa fa-minus-square" aria-hidden="true"></i>
+                                            <br/>
+                                            <label class="term-multi-values" data-index="1" for="term-values-{{_id}}" style="white-space:nowrap;">
+                                                Value 1&emsp;
+                                                <input class="table-term-val-new-input" type="text" value="" name="multival">
+                                            </label>
+                                            <label class="term-multi-values" data-index="2" for="term-values-{{_id}}" style="white-space:nowrap;">
+                                                Value 2&emsp;
+                                                <input class="table-term-val-new-input" type="text" value="" name="multival">
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{/if}} 
+                                {{/transition}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
