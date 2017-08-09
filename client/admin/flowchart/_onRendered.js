@@ -119,6 +119,7 @@ Template.admin_flowchart.rendered = function() {
 
         var getGraph = graph.toJSON();
         var setGraph = JSON.stringify(getGraph);
+        undo.push(setGraph)
     })
 
 
@@ -128,7 +129,7 @@ Template.admin_flowchart.rendered = function() {
 
         var getGraph = graph.toJSON();
         var setGraph = JSON.stringify(getGraph);
-        undo.push(setGraph);
+        redo.push(setGraph);
 
         if (undo.length < 1) {
             undo.push(undoInit);
@@ -661,6 +662,9 @@ Template.admin_flowchart.rendered = function() {
         if (elem instanceof joint.dia.Link && (!source.id || !target.id)) {
             elem.remove();
         }
+        var freeTransform = new joint.ui.FreeTransform({ cellView: cellView });
+        freeTransform.render();
+
     });
 
 
@@ -1405,7 +1409,15 @@ Template.admin_flowchart.rendered = function() {
                 'font-variant': 'small-caps',
                 'text-transform': 'capitalize'
             },
-        }
+        },
+        defaults: joint.util.deepSupplement({
+                                            type: 'custom.myCircle',
+                                            attrs: {
+                                                title: {text: 'Static Tooltip'},
+                                                '.element-process': { 'stroke-width': 1, r: 30, stroke: 'black', transform: 'translate(30, 30)' },
+                                                text: { ref: '.element-process'}
+                                                },}),
+
     });
     action.addPort({ group: 'in', attrs: { circle: { r: 6, magnet: true, stroke: '#000000', 'stroke-width': 1, fill: '#ffffff' } }, args: { x: '50%', y: '0%' } });
     action.addPort({ group: 'out', attrs: { circle: { r: 6, magnet: true, stroke: '#000000', 'stroke-width': 1, fill: '#000000' } }, args: { x: '50%', y: '100%' } })
@@ -1430,7 +1442,7 @@ Template.admin_flowchart.rendered = function() {
             }
         },
         attrs: {
-            circle: { fill: '#f1f3f4' },
+            circle: { fill: '#f1f3f4', class:'end-true' },
             text: {
                 //text: 'Success', 
                 fill: '#000000',
@@ -1465,7 +1477,7 @@ Template.admin_flowchart.rendered = function() {
             }
         },
         attrs: {
-            circle: { fill: '#000000', rx: 50, ry: 50, },
+            circle: { fill: '#000000', rx: 50, ry: 50, class:'end-false' },
             text: {
                 //text: 'stop', 
                 fill: '#f1f3f4',
@@ -1672,6 +1684,246 @@ Template.admin_flowchart.rendered = function() {
 
 
     });
+
+
+
+/*----------------------------------------------------------*/
+    joint.ui.FreeTransform = Backbone.View.extend({
+        className: "free-transform",
+        events: {
+            "mousedown .resize": "startResizing",
+            "mousedown .rotate": "startRotating",
+            "touchstart .resize": "startResizing",
+            "touchstart .rotate": "startRotating"
+        },
+        DIRECTIONS: ["nw", "n", "ne", "e", "se", "s", "sw", "w"],
+        POSITIONS: ["top-left", "top", "top-right", "right", "bottom-right", "bottom", "bottom-left", "left"],
+        options: {
+            cellView: void 0,
+            rotateAngleGrid: 15,
+            preserveAspectRatio: !1,
+            minWidth: 0,
+            minHeight: 0,
+            maxWidth: 1 / 0,
+            maxHeight: 1 / 0,
+            allowOrthogonalResize: !0,
+            allowRotation: !0
+        },
+        initialize: function(a) {
+            this.options = _.extend({}, _.result(this, "options"), a || {}), this.options.cellView && _.defaults(this.options, {
+                cell: this.options.cellView.model,
+                paper: this.options.cellView.paper,
+                graph: this.options.cellView.paper.model
+            }), _.bindAll(this, "update", "remove", "pointerup", "pointermove"), joint.ui.FreeTransform.clear(this.options.paper), $(document.body).on("mousemove touchmove", this.pointermove), $(document).on("mouseup touchend", this.pointerup), this.listenTo(this.options.graph, "all", this.update), this.listenTo(this.options.graph, "reset", this.remove), this.listenTo(this.options.cell, "remove", this.remove), this.listenTo(this.options.paper, "blank:pointerdown freetransform:create", this.remove), this.listenTo(this.options.paper, "scale translate", this.update), this.options.paper.$el.append(this.el)
+        },
+        renderHandles: function() {
+            var a = $("<div/>").prop("draggable", !1),
+                b = a.clone().addClass("rotate"),
+                c = _.map(this.POSITIONS, function(b) {
+                    return a.clone().addClass("resize").attr("data-position", b)
+                });
+            this.$el.empty().append(c, b)
+        },
+        render: function() {
+            this.renderHandles(), this.$el.attr("data-type", this.options.cell.get("type")).toggleClass("no-orthogonal-resize", this.options.preserveAspectRatio || !this.options.allowOrthogonalResize).toggleClass("no-rotation", !this.options.allowRotation), this.update()
+        },
+        update: function() {
+            var a = this.options.paper.viewport.getCTM(),
+                b = this.options.cell.getBBox();
+            b.x *= a.a, b.x += a.e, b.y *= a.d, b.y += a.f, b.width *= a.a, b.height *= a.d;
+            var c = g.normalizeAngle(this.options.cell.get("angle") || 0),
+                d = "rotate(" + c + "deg)";
+            this.$el.css({
+                width: b.width + 4,
+                height: b.height + 4,
+                left: b.x - 3,
+                top: b.y - 3,
+                transform: d,
+                "-webkit-transform": d,
+                "-ms-transform": d
+            });
+            var e = Math.floor(c * (this.DIRECTIONS.length / 360));
+            if (e != this._previousDirectionsShift) {
+                var f = this.DIRECTIONS.slice(e).concat(this.DIRECTIONS.slice(0, e));
+                this.$(".resize").removeClass(this.DIRECTIONS.join(" ")).each(function(a, b) {
+                    $(b).addClass(f[a])
+                }), this._previousDirectionsShift = e
+            }
+        },
+        startResizing: function(a) {
+            a.stopPropagation(), this.options.graph.trigger("batch:start");
+            var b = $(a.target).data("position"),
+                c = 0,
+                d = 0;
+            _.each(b.split("-"), function(a) {
+                c = {
+                    left: -1,
+                    right: 1
+                }[a] || c, d = {
+                    top: -1,
+                    bottom: 1
+                }[a] || d
+            }), b = {
+                top: "top-left",
+                bottom: "bottom-right",
+                left: "bottom-left",
+                right: "top-right"
+            }[b] || b;
+            var e = {
+                "top-right": "bottomLeft",
+                "top-left": "corner",
+                "bottom-left": "topRight",
+                "bottom-right": "origin"
+            }[b];
+            this._initial = {
+                angle: g.normalizeAngle(this.options.cell.get("angle") || 0),
+                resizeX: c,
+                resizeY: d,
+                selector: e,
+                direction: b
+            }, this._action = "resize", this.startOp(a.target)
+        },
+        startRotating: function(a) {
+            a.stopPropagation(), this.options.graph.trigger("batch:start");
+            var b = this.options.cell.getBBox().center(),
+                c = this.options.paper.snapToGrid({
+                    x: a.clientX,
+                    y: a.clientY
+                });
+            this._initial = {
+                centerRotation: b,
+                modelAngle: g.normalizeAngle(this.options.cell.get("angle") || 0),
+                startAngle: g.point(c).theta(b)
+            }, this._action = "rotate", this.startOp(a.target)
+        },
+        pointermove: function(a) {
+            if (this._action) {
+                a = joint.util.normalizeEvent(a);
+                var b = this.options.paper.snapToGrid({
+                        x: a.clientX,
+                        y: a.clientY
+                    }),
+                    c = this.options.paper.options.gridSize,
+                    d = this.options.cell,
+                    e = this._initial;
+                switch (this._action) {
+                    case "resize":
+                        var f = d.getBBox(),
+                            h = g.point(b).rotate(f.center(), e.angle),
+                            i = h.difference(f[e.selector]()),
+                            j = e.resizeX ? i.x * e.resizeX : f.width,
+                            k = e.resizeY ? i.y * e.resizeY : f.height;
+                        if (j = g.snapToGrid(j, c), k = g.snapToGrid(k, c), j = Math.max(j, this.options.minWidth || c), k = Math.max(k, this.options.minHeight || c), j = Math.min(j, this.options.maxWidth), k = Math.min(k, this.options.maxHeight), this.options.preserveAspectRatio) {
+                            var l = f.width * k / f.height,
+                                m = f.height * j / f.width;
+                            l > j ? k = m : j = l
+                        }(f.width != j || f.height != k) && d.resize(j, k, {
+                            direction: e.direction
+                        });
+                        break;
+                    case "rotate":
+                        var n = e.startAngle - g.point(b).theta(e.centerRotation);
+                        d.rotate(g.snapToGrid(e.modelAngle + n, this.options.rotateAngleGrid), !0)
+                }
+            }
+        },
+        pointerup: function() {
+            this._action && (this.stopOp(), this.options.graph.trigger("batch:stop"), delete this._action, delete this._initial)
+        },
+        remove: function() {
+            Backbone.View.prototype.remove.apply(this, arguments), $("body").off("mousemove touchmove", this.pointermove), $(document).off("mouseup touchend", this.pointerup)
+        },
+        startOp: function(a) {
+            a && ($(a).addClass("in-operation"), this._elementOp = a), this.$el.addClass("in-operation")
+        },
+        stopOp: function() {
+            this._elementOp && ($(this._elementOp).removeClass("in-operation"), delete this._elementOp), this.$el.removeClass("in-operation")
+        }
+    }, {
+        clear: function(a) {
+            a.trigger("freetransform:create")
+        }
+    });
+//free transform
+function setTransforms() {
+  $("g.joint-cell").each(function() {
+
+    var drag = $(this),
+        nestedSVG = $("svg.svg.inline"),
+        handle = $('#stage').find("#resizeHandler"),
+        rHandle = $('#stage').find("#rotateHandler");
+    
+    var nB = nestedSVG[0].getBBox(),
+        hB = handle[0].getBBox();
+    
+    const WD = nB.width;
+    const HT = nB.height;
+    const rt = WD/HT;
+    
+    var rotating = null;
+    console.log(nestedSVG); // makes it easier to select the svg in real inspector
+    TweenLite.set(rHandle, { x: nB.x, y: nB.y  });
+    TweenLite.set(handle, { x: nB.x+nB.width-10, y: nB.height+nB.y-10 });
+    TweenLite.set(drag,{transformOrigin:"center center"});
+    Draggable.create(drag, { throwProps:true , bounds: "#stage-container" });
+
+    Draggable.create(handle, {
+      cursor: 'se-resize',
+      bounds:{minX:70,minY:70,maxX:Number.MAX_VALUE,maxY:Number.MAX_VALUE},
+      onPress: function(e) { e.stopPropagation(); },
+      onDrag: function() {
+        var wd = this.x+hB.width;
+        var scaleAmt = wd/WD;
+        var newWd = Math.round(WD*scaleAmt);
+        var newHt = Math.round(HT*scaleAmt);
+        TweenLite.set(drag, { width: wd, height: this.y+hB.height }); 
+        TweenLite.set(nestedSVG, {scale: scaleAmt, attr:{height: newHt, width: newWd}});
+        TweenLite.set('.ga-handle', {scale: 1.0});
+        var newnB = nestedSVG[0].getBBox();
+        TweenLite.set(handle, { attr:{x: newWd-10, y: newHt-10}});
+        handle.removeAttr('style');
+      }
+    });
+
+    rHandle.on("mousedown" , function () {
+      Draggable.get(drag).kill();
+      TweenLite.set(drag,{transformOrigin:"center center"});
+      rotating = Draggable.create(drag, { throwProps:true , type:"rotation" });
+    })
+
+    $("body").on("mouseup" , function () {
+      if (rotating) {
+        rotating[0].kill();
+        rotating = null;
+        Draggable.create(drag, { throwProps:true , bounds: "#stage-container"});
+      }
+    })
+  });
+}
+
+setTransforms();
+
+/*--------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function compareArrays(arr1, arr2) {
         var ret = [];

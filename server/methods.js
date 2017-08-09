@@ -40,15 +40,20 @@ Meteor.methods({
 		Sets.remove(id);
 		console.log("removed set with id ["+id+"]");
 	},
-	insertGraph:function(data){
-		return Graphs.insert(data, function(err, result){
-			if (err){
-				console.log(err);
-			} else if (result){
-				console.log(result);
-				return result;
-			}
-		});
+	insertGraph:function(data, id){
+		console.log(id);
+		if (id){
+			GraphThumbs.remove({"name":id+".png"});
+			Graphs.update({_id:id}, {$set:data});
+			return id;
+		} else {
+			return Graphs.insert(data, function(err, result){
+				if (err){
+				} else if (result){
+					return result;
+				}
+			});
+		}
 	},
 	updateGraph:function(data){
 		GraphThumbs.remove({"name":data._id+".png"});
@@ -88,9 +93,6 @@ Meteor.methods({
 		}
 
 		// changing email
-		var oldMail = Meteor.users.findOne(id).profile.email;
-		Accounts.addEmail(id, user.email);
-		Accounts.removeEmail(id, oldMail);
 		console.log(user);
 		
 		// update profile
@@ -98,10 +100,19 @@ Meteor.methods({
 			if (err){
 				console.log(err);
 			} else if (result){
+				var oldMail = Meteor.users.findOne(id).profile.email;
+				Accounts.removeEmail(id, oldMail);
+				Accounts.addEmail(id, user.email);
 				console.log("User updated: "+result);
 				return result;
 			}
 		});
 		
 	},
+	setPassword:function(userId, password){
+		Accounts.setPassword(userId, password)
+	},
+	deleteUser:function(id){
+		Meteor.users.remove({_id:id});
+	}
 });

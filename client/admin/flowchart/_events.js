@@ -23,6 +23,7 @@ Template.flowchart_top.events({
 
 })
 
+graphData = {};
 Template.flowchart_paper.events({
     'click #save-graph': function(e) {
         if (Session.get("loadGraph")) {
@@ -30,8 +31,17 @@ Template.flowchart_paper.events({
             var name = Graphs.findOne(id).name;
             $('[name="newGraph-name"]').val(name);
         }
+
     },
     'click #btn-submit-graph': function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $("tspan").each(function() {
+            var str = $(this).text();
+            str = str.replace(/\s+/g, ' ');
+            $(this).text(str);
+        })
         var setsArr = [];
         var termsArr = [];
         var setItems = $("text[data-collection='sets']");
@@ -39,7 +49,6 @@ Template.flowchart_paper.events({
 
         var getGraph = graph.toJSON();
         var setGraph = JSON.stringify(getGraph);
-        var name = $("input[name='newGraph-name']").val();
 
         // get the ids of terms and sets used and store them in an array
         setItems.each(function() {
@@ -65,122 +74,76 @@ Template.flowchart_paper.events({
         var terms = uniqueTerms(termsArr);
 
         // scale it for grabbing the smaller size
-        if (globalCell) {
-            paper.findViewByModel(globalCell).unhighlight([globalCell]);
-            globalCellId = false;
-            globalCell = false;
+
+        
+        var trueCellId = $('.end-true:last').closest(".joint-cell").attr('model-id');
+        var trueCell = graph.getCell(trueCellId); 
+        var trueSignal = graph.getPredecessors(trueCell);
+        trueSignal = JSON.stringify(trueSignal);
+
+        var falseCellId = $('.end-false:last').closest(".joint-cell").attr('model-id');
+        var falseCell = graph.getCell(falseCellId); 
+        var falseSignal = graph.getPredecessors(falseCell);
+        falseSignal = JSON.stringify(falseSignal);
+
+        graphData.graph = setGraph;
+        graphData.terms = terms,
+        graphData.meta = {
+            owner: Meteor.userId(),
+            added: new Date(),
         }
-
-        var graphData = {
-            name: name,
-            graph: setGraph,
-            terms: terms,
-            meta: {
-                owner: Meteor.userId(),
-                added: new Date(),
-            },
+        graphData.signal = {
+            true:trueSignal,
+            false:falseSignal,
         }
-        // if saving to old or new graph
-        if (Session.get("loadGraph")) {
-            graphData._id = Session.get("loadGraph");
-            Meteor.call("updateGraph", graphData, function(err, res) {
-                if (!err) {
+        console.log("------------------------------------------------");
+        console.log(graphData);
+        console.log("------------------------------------------------");
 
-                    $("tspan").each(function() {
-                        var str = $(this).text();
-                        str = str.replace(/\s+/g, ' ');
-                        $(this).text(str);
-                    })
+        var name = $("input[name='newGraph-name']").val();
+        graphData.name = name;
+        console.log(graphData);
+        console.log("------------------------------------------------");
+        var oldGraph = Session.get("loadGraph");
 
-                    svgAsDataUri(document.querySelectorAll("svg")[1], { scale: 0.1 }, function(uri) {
-                        // callback used to get URI from onload function inside svgAsDataUri, create an object and insert it into FScollection
-                        var data = function(imgData) {
-                            var graphThumb = {
-                                file: imgData,
-                                isBase64: true,
-                                fileName: graphData._id + ".png",
-                            }
-                            // in collections.js enable insert after accounts are set up
-                            GraphThumbs.insert(graphThumb, function(err, res) {
-                                if (!err) {
-                                    alert("jesss!")
-                                }
-                            });
-                        };
-                        // create png uri and pass it to callback for data insert
-                        var image = new Image();
-                        image.src = uri;
-                        image.onload = function() {
-                            var canvas = document.createElement('canvas');
-                            canvas.width = image.width;
-                            canvas.height = image.height;
-                            var context = canvas.getContext('2d');
-                            context.drawImage(image, 0, 0);
+        Meteor.call("insertGraph", graphData, oldGraph, function(err, result) {
+            if (result) {
+                // have to replace empty spaces written as &nbsp; before creating uri else image throws error
 
-                            var dataUri = canvas.toDataURL('image/png');
-                            // initiate callback
-                            data(dataUri);
+                svgAsDataUri(document.querySelectorAll("svg")[1], { scale: 0.1 }, function(uri) {
+                    // callback used to get URI from onload function inside svgAsDataUri, create an object and insert it into FScollection
+                    var data = function(imgData) {
+                        var graphThumb = {
+                            file: imgData,
+                            isBase64: true,
+                            fileName: result + ".png",
                         }
-                        image.onerror = function(err) {
-                            console.log(err);
-                        }
+                        // in collections.js enable insert after accounts are set up
+                        GraphThumbs.insert(graphThumb);
+                    };
+                    // create png uri and pass it to callback for data insert
+                    var image = new Image();
+                    image.src = uri;
+                    image.onload = function() {
+                        var canvas = document.createElement('canvas');
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        var context = canvas.getContext('2d');
+                        context.drawImage(image, 0, 0);
 
-                        toastr["success"]("Workflow " + graphData.name + " successfully updated!");
-                    });
-
-
-                } else {
-                    toastr["warning"]("Error while updating workflow: " + err);
-                }
-            });
-
-
-
-        } else {
-            Meteor.call("insertGraph", graphData, function(err, result) {
-                if (result) {
-                    // have to replace empty spaces written as &nbsp; before creating uri else image throws error
-                    $("tspan").each(function() {
-                        var str = $(this).text();
-                        str = str.replace(/\s+/g, ' ');
-                        $(this).text(str);
-                    })
-
-                    svgAsDataUri(document.querySelectorAll("svg")[1], { scale: 0.1 }, function(uri) {
-                        // callback used to get URI from onload function inside svgAsDataUri, create an object and insert it into FScollection
-                        var data = function(imgData) {
-                            var graphThumb = {
-                                file: imgData,
-                                isBase64: true,
-                                fileName: result + ".png",
-                            }
-                            // in collections.js enable insert after accounts are set up
-                            GraphThumbs.insert(graphThumb);
-                        };
-                        // create png uri and pass it to callback for data insert
-                        var image = new Image();
-                        image.src = uri;
-                        image.onload = function() {
-                            var canvas = document.createElement('canvas');
-                            canvas.width = image.width;
-                            canvas.height = image.height;
-                            var context = canvas.getContext('2d');
-                            context.drawImage(image, 0, 0);
-
-                            var dataUri = canvas.toDataURL('image/png');
-                            // initiate callback
-                            data(dataUri);
-                        }
-                        image.onerror = function(err) {
-                            console.log(err);
-                        }
-                    });
-                    toastr["success"]("Workflow " + graphData.name + " successfully added!");
-                } else {
-                    toastr["warning"]("Error while adding workflow: " + err);
-                }
-            });
-        }
+                        var dataUri = canvas.toDataURL('image/png');
+                        // initiate callback
+                        data(dataUri);
+                    }
+                    image.onerror = function(err) {
+                        console.log(err);
+                    }
+                });
+                toastr["success"]("Workflow " + graphData.name + " successfully added!");
+            } else {
+                toastr["warning"]("Error while adding workflow: " + err);
+            }
+        });
     },
     'click #clear-graph': function() {
         Session.set("loadGraph", false);

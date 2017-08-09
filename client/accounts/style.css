@@ -7,3 +7,23 @@ main.page-content > .page-login{
 .panel-login{
 	top:100px;
 }
+.form-group-user{
+	margin-bottom:0px !important;
+}
+.label-div{
+	padding-top:8px;
+}
+input.user-form{
+	width:100% !important;
+}
+#user-create{
+	padding:0 15px !important;
+}
+.list-edit-user:hover{
+	cursor:pointer;
+	color:#009900;
+}
+.list-delete-user:hover{
+	cursor:pointer;
+	color:#e60000;
+}

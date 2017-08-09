@@ -13,6 +13,11 @@ Router.route("/profile", function() {
     Session.set("route", "/profile");
     this.render('profile');
 });
+Router.route("/users", function() {
+    Session.clear();
+    Session.set("route", "/users");
+    this.render('users');
+});
 Router.route("/calendar", function() {
     Session.clear();
     Session.set("route", "/calendar");

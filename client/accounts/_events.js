@@ -56,6 +56,7 @@ Template.register.events({
                     avatar: "assets/images/default_user.png",
                     location: "Location unknown",
                     web: "Website uknown",
+                    isAdmin:true,
                 }
             });
             toastr["info"]("Welcome to PureWin, " + nameVar + "!");
@@ -145,5 +146,133 @@ Template.profile.events({
         } else {
             toastr["error"]("Passwords do not match!");
         }
+    }
+})
+
+Template.users.events({
+    'submit form':function(e){
+        e.preventDefault();
+        var name = $("[name='updateName']").val();
+        var job = $("[name='updateJob']").val();
+        var location = $("[name='updateLocation']").val();
+        var email = $("[name='updateEmail']").val();
+        var web = $("[name='updateWeb']").val();
+        var status = $("[name='updateStatus']").val();
+        var password = $("[name='newPassword']").val();
+        var repeatPw = $("[name='repeatPassword']").val();
+
+        if (repeatPw == password) {
+
+            if (job == "") {
+                job = "Job unknown";
+            }
+            if (location == "") {
+                location = "Location unknown";
+            }
+            if (web == "") {
+                web = "Website unknown";
+            }
+            if (status == "true"){
+                status = true;
+            } else if (status == "false"){
+                status = false;
+            }
+            if(!Session.get("editUser")){
+                // if there is not userid in session, generate new user
+                Accounts.createUser({
+                    email: email,
+                    password: password,
+                    profile: {
+                        name: name,
+                        email: email,
+                        job: job,
+                        avatar: "assets/images/default_user.png",
+                        location: location,
+                        web: web,
+                        isAdmin:status,
+                    }
+                }, function(err, res){
+                    if (!err){
+                       toastr["success"]("User "+name+" created successfully!"); 
+                        $("#form-create-user").click();
+                        document.getElementById("admin-user-create").reset();
+                    } else {
+                        toastr["error"]("There was an error while creating user: "+err);
+                    }
+                });
+            } else {
+                var userId = Session.get("editUser");
+                var user = {
+                    name: name,
+                    job: job,
+                    location: location,
+                    email: email,
+                    web: web,
+                    isAdmin:status,
+                }
+                console.log(user);
+                Meteor.call("editUser", userId, user, function(err, res) {
+                    if (!err) {
+
+                        if(password != ""){
+                            Meteor.call("setPassword", userId, password);
+                        }
+                        toastr["success"]("User details changed!");
+                        Session.set("editUser", false);
+                        Session.set("updateProfile", false);
+                        $("#form-create-user").click();
+                        document.getElementById("admin-user-create").reset();
+                    } else {
+                        toastr["error"]("There was an error updating user profile: " + err);
+                    }
+                });
+
+            }
+            
+
+        } else {
+            toastr["error"]("Passwords do not match!");
+        }
+    },
+    'click .list-delete-user':function(e){
+        var id = this._id;
+        if (id == Meteor.userId()){
+            toastr["error"]("You are trying to delete yourself, permission denied.");
+        } else {
+            Meteor.call("deleteUser", id, function(err, res){
+                if (!err){
+                    toastr["success"]("User deleted successfully!"); 
+                } else {
+                    toastr["error"]("There was an error while deleting user: "+err);
+                }
+            })  
+        }
+    },
+    'click .list-edit-user':function(e){
+        Session.set("editUser", this._id);
+        $("#form-create-user").click();
+        var id = this._id;
+        var user = Meteor.users.findOne(id);
+        console.log(user);
+        $("[name='updateName']").val(user.profile.name);
+        $("[name='updateJob']").val(user.profile.job);
+        $("[name='updateLocation']").val(user.profile.location);
+        $("[name='updateEmail']").val(user.profile.email);
+        $("[name='updateWeb']").val(user.profile.web);
+        if(user.profile.isAdmin == true){
+            $("option[value='true']").prop('selected', true);
+        } else if (user.profile.isAdmin == false){
+            $("option[value='false']").prop('selected', true);
+        }
+
+        //var password = $("[name='newPassword']").val();
+        //var repeatPw = $("[name='repeatPassword']").val();
+
+    },
+    'click #user-cancel':function(e){
+        e.preventDefault();
+        $("#form-create-user").click();
+        document.getElementById("admin-user-create").reset();
+
     }
 })

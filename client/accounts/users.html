@@ -1,0 +1,153 @@
+<template name="users">
+    <div class="content">
+        <div class="container">
+            <div class="row header">
+                <div class="content-header">
+                    <div class="content-header-left col-md-6 col-xs-12 mb-1">
+                        <h2 class="content-header-title">Administer Users</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-7 user-create-form">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Users list</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a class="btn-card-toggle active-card" data-toggle="collapse" data-target="#user-list"><i class="card-status fa fa-angle-down"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in" id="user-list">
+                            <div class="container">
+                                <div class="terms">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>email</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{#each users}}
+						    					{{#transition in="fadeInLeft"}}
+                                                <tr>
+                                                    <th>{{profile.name}}</th>
+                                                    <th>{{profile.email}}</th>
+                                                    <th>{{#if profile.isAdmin}}Admin{{else}}User{{/if}}</th>
+                                                    <th>
+                                                        <i class="icon-settings list-edit-user m-r-xs" aria-hidden="true"></i>
+                                                        <i class="icon-trash list-delete-user m-r-xs" aria-hidden="true"></i>
+                                                    </th>
+                                                </tr>
+                                                {{/transition}}
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Create User</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a class="btn-card-toggle inactive-card" id="form-create-user" data-toggle="collapse" data-target="#user-create"><i class="card-status fa fa-angle-down"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse" id="user-create">
+                            <div class="container">
+                                <form id="admin-user-create">
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="updateName"><i class="icon-user m-r-xs" aria-hidden="true"></i>Name</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <input class="form-control user-form" type="text" name="updateName" id="updateName" placeholder="Enter name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="updateLocation"><i class="icon-envelope-open m-r-xs" aria-hidden="true"></i>Email</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <input class="form-control user-form" type="email" name="updateEmail" placeholder="Enter email" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="newPassword"><i class="icon-key m-r-xs" aria-hidden="true"></i>Password</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <input class="form-control user-form" type="password" name="newPassword" id="newPassword" placeholder="Enter password" required="{{#unless editUser}}true{{/unless}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="repeatPassword">&nbsp;</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <input class="form-control user-form" type="password" name="repeatPassword" id="repeatPassword" placeholder="Repeat password" required="{{#unless editUser}}true{{/unless}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="updateJob"><i class="icon-briefcase m-r-xs" aria-hidden="true"></i>Workplace</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <input class="form-control user-form" type="text" name="updateJob" id="updateJob" placeholder="Enter workplace">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="updateLocation"><i class="icon-pointer m-r-xs" aria-hidden="true"></i>Location</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <input class="form-control user-form" type="text" name="updateLocation" id="updateLocation" placeholder="Enter location">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="updateWeb"><i class="icon-link m-r-xs" aria-hidden="true"></i>Website</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <input class="form-control user-form" type="text" name="updateWeb" id="updateWeb" placeholder="Enter website">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-user row">
+                                        <div class="col-xs-12 col-md-4 label-div">
+                                            <label for="userStatus"><i class="icon-badge m-r-xs" aria-hidden="true"></i>Status</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-8">
+                                            <select class="form-control" name="updateStatus" id="userStatus">
+                                                <option value="false">User</option>
+                                                <option value="true">Admin</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-xs-12">
+                                        <button type="submit" class="btn btn-info btn-block" id="user-save">Submit</button>
+                                        <button type="submit" class="btn btn-danger btn-block" id="user-cancel">Cancel</button>
+                                        <br>&nbsp;
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
